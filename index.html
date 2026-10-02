@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEURORA POS</title>
+  <link rel="stylesheet" href="core/core.css">
+  <link rel="stylesheet" href="modules/caja/caja.css">
+  <link rel="stylesheet" href="modules/inventario/inventario.css">
+  <link rel="stylesheet" href="modules/config/config.css">
+  <link rel="stylesheet" href="modules/finanzas/finanzas.css">
+  <link rel="stylesheet" href="modules/reportes/reportes.css">
+  <link rel="stylesheet" href="modules/compras/compras.css">
+  <link rel="stylesheet" href="modules/automatizacion/automatizacion.css">
+</head>
+<body>
+  <div id="moduleContainer"></div>
+  
+  <script src="core/nucleo.js"></script>
+  <script src="modules/caja/caja.js"></script>
+  <script src="modules/inventario/inventario.js"></script>
+  <script src="modules/config/config.js"></script>
+  <script src="modules/finanzas/finanzas.js"></script>
+  <script src="modules/reportes/reportes.js"></script>
+  <script src="modules/compras/compras.js"></script>
+  <script src="modules/automatizacion/automatizacion.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      document.addEventListener('DOMContentLoaded', function () {
+        
+        if (typeof NUCLEO === 'undefined') {
+          document.body.innerHTML = '<div style="padding:2rem;color:red;font-family:monospace;">ERROR: El NÚCLEO no se cargó correctamente.</div>';
+          return;
+        }
+
+        // ORDEN CORRECTO DE REGISTRO:
+        // 1. CAJA
+        NUCLEO.registerModule('caja', {
+          name: 'CAJA',
+          icon: 'point_of_sale',
+          init: function () { if (typeof CAJA !== 'undefined') CAJA.init(); },
+          onShow: function () { if (typeof CAJA !== 'undefined') CAJA.onShow(); }
+        });
+
+        // 2. INVENTARIO
+        NUCLEO.registerModule('inventario', {
+          name: 'INVENTARIO',
+          icon: 'inventory_2',
+          init: function () { if (typeof INVENTARIO !== 'undefined') INVENTARIO.init(); },
+          onShow: function () { if (typeof INVENTARIO !== 'undefined') INVENTARIO.onShow(); }
+        });
+
+        // 3. COMPRAS
+        NUCLEO.registerModule('compras', {
+          name: 'COMPRAS',
+          icon: 'shopping_cart',
+          init: function () { if (typeof ComprasModule !== 'undefined') ComprasModule.init(); },
+          onShow: function () { if (typeof ComprasModule !== 'undefined') ComprasModule.onShow(); }
+        });
+
+        // 4. FINANZAS
+        NUCLEO.registerModule('finanzas', {
+          name: 'FINANZAS',
+          icon: 'account_balance_wallet',
+          init: function () { if (typeof FINANZAS !== 'undefined') FINANZAS.init(); },
+          onShow: function () { if (typeof FINANZAS !== 'undefined') FINANZAS.onShow(); }
+        });
+
+        // 5. REPORTES
+        NUCLEO.registerModule('reportes', {
+          name: 'REPORTES',
+          icon: 'analytics',
+          init: function () { if (typeof REPORTES !== 'undefined') REPORTES.init(); },
+          onShow: function () { if (typeof REPORTES !== 'undefined') REPORTES.onShow(); }
+        });
+
+        // 6. CONFIG
+        NUCLEO.registerModule('config', {
+          name: 'CONFIG',
+          icon: 'settings',
+          init: function () { if (typeof CONFIG !== 'undefined') CONFIG.init(); },
+          onShow: function () { if (typeof CONFIG !== 'undefined') CONFIG.onShow(); }
+        });
+
+        // 7. AUTOMATIZACIÓN (noTab)
+        setTimeout(function() {
+          if (typeof AUTOMATIZACION !== 'undefined') {
+            AUTOMATIZACION.init();
+          }
+        }, 200);
+
+        // Mostrar CAJA por defecto
+        setTimeout(function () {
+          NUCLEO.showTab('caja');
+        }, 100);
+
+      });
+    })();
+  </script>
+</body>
+</html>

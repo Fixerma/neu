@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="es" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NEURORA POS - Notificaciones y Alertas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Hanken Grotesk"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          },
+          boxShadow: {
+            'dropdown': '0 10px 30px rgba(0, 0, 0, 0.12)',
+          }
+        }
+      }
+    }
+  </script>
+<style>
+  /* Clases con prefijo .alert-* según especificación de automatización */
+  .alert-dropdown {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  }
+  .alert-pointer {
+    position: absolute;
+    top: -7px;
+    right: 18px;
+    width: 14px;
+    height: 14px;
+    transform: rotate(45deg);
+    background-color: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    border-left: 1px solid #e2e8f0;
+  }
+</style>
+</head>
+<body class="h-full bg-slate-100 font-sans text-slate-800 antialiased overflow-hidden flex flex-col select-none">
+<!-- ================= TOP NAVIGATION BAR ================= -->
+<header class="bg-white border-b border-slate-200 h-16 px-6 flex items-center justify-between shrink-0 relative z-30 shadow-sm">
+<!-- Left: Brand -->
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-blue-700 text-white flex items-center justify-center shadow-md shadow-indigo-200">
+<i class="fa-solid fa-cash-register text-lg"></i>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-extrabold tracking-tight text-slate-900 text-lg leading-tight">NEURORA POS</span>
+<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 uppercase tracking-wider">v12.4</span>
+</div>
+<span class="text-[11px] font-medium text-slate-500">Sistema Inteligente de Punto de Venta</span>
+</div>
+</div>
+<!-- Center: Navigation Tabs -->
+<nav class="flex items-center space-x-1 h-full"><a class="inline-flex items-center gap-2 px-4 h-full text-sm font-bold text-indigo-700 border-b-2 border-indigo-600 bg-indigo-50/40 transition-colors" href="#">
+<i class="fa-solid fa-shop text-xs"></i>
+<span class="">CAJA</span>
+</a>
+<a class="inline-flex items-center gap-2 px-4 h-full text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 border-b-2 border-transparent transition-colors" href="#">
+<i class="fa-solid fa-boxes-stacked text-xs text-slate-400"></i>
+<span class="">INVENTARIO</span>
+</a>
+<a class="inline-flex items-center gap-2 px-4 h-full text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 border-b-2 border-transparent transition-colors" href="#">
+<i class="fa-solid fa-barcode text-xs text-slate-400"></i>
+<span class="">COMPRAS</span>
+</a>
+<a class="inline-flex items-center gap-2 px-4 h-full text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 border-b-2 border-transparent transition-colors" href="#">
+<i class="fa-solid fa-chart-pie text-xs text-slate-400"></i>
+<span class="">FINANZAS</span>
+</a>
+<a class="inline-flex items-center gap-2 px-4 h-full text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 border-b-2 border-transparent transition-colors" href="#">
+<i class="fa-solid fa-money-bill-wave text-xs text-slate-400"></i>
+<span class="">REPORTES</span>
+</a>
+<a class="inline-flex items-center gap-2 px-4 h-full text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-50 border-b-2 border-transparent transition-colors" href="#">
+<i class="fa-solid fa-sliders text-xs text-slate-400"></i>
+<span class="">CONFIG</span>
+</a></nav>
+<!-- Right: Operational Controls & Notifications -->
+<div class="flex items-center gap-3.5">
+<!-- Notification Bell with Active Floating Dropdown Trigger -->
+<div class="relative">
+<button class="relative w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 flex items-center justify-center transition-all ring-2 ring-indigo-500/20 shadow-sm" id="bellBtn" title="2 Alertas Críticas">
+<i class="fa-solid fa-bell text-lg"></i>
+<!-- FIX 1: Badge numérico sobre campana exactamente '2' en rojo -->
+<span class="alert-badge alert-badge-critica absolute -top-1 -right-1 min-w-[20px] h-5 px-1.5 bg-red-500 text-white text-[11px] font-extrabold rounded-full flex items-center justify-center shadow-md shadow-red-200 border-2 border-white animate-pulse">
+            2
+          </span>
+</button>
+<!-- ================= FIX 2: DROPDOWN FLOTANTE ABSOLUTO ANCLADO ================= -->
+<div class="alert-dropdown absolute right-0 top-full mt-2.5 w-[440px] bg-white rounded-2xl border border-slate-200 z-50 overflow-visible transform origin-top-right transition-all" id="notificationDropdown">
+<!-- Puntero superior apuntando hacia la campana -->
+<div class="alert-pointer"></div>
+<!-- Dropdown Header -->
+<div class="px-5 py-3.5 bg-white border-b border-slate-100 rounded-t-2xl flex items-center justify-between relative z-10">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm">
+<i class="fa-solid fa-bell"></i>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-base font-bold text-slate-900 leading-tight">Alertas</h3>
+<!-- FIX 1: Pill 2 alertas críticas -->
+<span class="alert-badge alert-badge-critica px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-700 border border-rose-200">2 alertas críticas</span>
+</div>
+<p class="text-xs text-slate-500 font-medium mt-0.5">4 alertas activas</p>
+</div>
+</div>
+<button class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 hover:underline">
+              Marcar todas
+            </button>
+</div>
+<!-- Alert Cards Container (FIX 3: Exactamente 4 Cards) -->
+<div class="p-3.5 space-y-2.5 max-h-[460px] overflow-y-auto bg-slate-50/50">
+<!-- Card 1: MARGEN EROSIONADO (ALTA) -->
+<div class="alert-card bg-white rounded-xl p-3.5 border-2 border-rose-500/80 shadow-sm hover:shadow-md transition-shadow relative">
+<div class="flex items-start justify-between gap-3 mb-1.5">
+<div class="flex items-center gap-2">
+<span class="text-base">⚠️</span>
+<h4 class="text-sm font-bold text-slate-900">Margen Erosionado</h4>
+</div>
+<!-- Severity Badge: ALTA -->
+<span class="alert-badge alert-badge-alta inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wide bg-rose-100 text-rose-700 border border-rose-200">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-600"></span>
+                  ALTA
+                </span>
+</div>
+<!-- Description -->
+<p class="text-xs text-slate-600 leading-relaxed">El costo de <span class="font-bold text-slate-900">Coca Cola 2.25L</span> subió a <span class="font-semibold text-slate-900">$1.450</span>. Tu precio actual deja una ganancia del <span class="font-bold text-rose-600">8%</span>. Actualizar precio en INVENTARIO.</p>
+<!-- Footer Actions -->
+<div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
+<button class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors">
+<i class="fa-solid fa-check text-[11px] text-slate-400"></i>
+<span class="">Marcar como leída</span>
+</button>
+<button class="alert-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-sm shadow-indigo-200 transition-colors">
+<span class="">IR A INVENTARIO</span>
+<i class="fa-solid fa-arrow-right text-[10px]"></i>
+</button>
+</div>
+</div>
+<!-- Card 2: FLUJO DE CAJA (ALTA) -->
+<div class="alert-card bg-white rounded-xl p-3.5 border-2 border-rose-500/80 shadow-sm hover:shadow-md transition-shadow relative">
+<div class="flex items-start justify-between gap-3 mb-1.5">
+<div class="flex items-center gap-2">
+<span class="text-base">💰</span>
+<h4 class="text-sm font-bold text-slate-900">Flujo de Caja</h4>
+</div>
+<!-- Severity Badge: ALTA -->
+<span class="alert-badge alert-badge-alta inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wide bg-rose-100 text-rose-700 border border-rose-200">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-600"></span>
+                  ALTA
+                </span>
+</div>
+<!-- Description -->
+<p class="text-xs text-slate-600 leading-relaxed">En 2 días vencen <span class="font-bold text-slate-900">$45.000</span> en reservas (<span class="font-semibold text-slate-800">Proveedor Aza</span>). Tu disponible actual es <span class="font-semibold text-slate-800">$30.000</span>. <span class="font-bold text-rose-600">Te faltan $15.000.</span></p>
+<!-- Footer Actions -->
+<div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
+<button class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors">
+<i class="fa-solid fa-check text-[11px] text-slate-400"></i>
+<span class="">Marcar como leída</span>
+</button>
+<button class="alert-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-sm shadow-indigo-200 transition-colors">
+<span class="">IR A FINANZAS</span>
+<i class="fa-solid fa-arrow-right text-[10px]"></i>
+</button>
+</div>
+</div>
+<!-- Card 3: STOCK BAJO (MEDIA) -->
+<div class="alert-card bg-white rounded-xl p-3.5 border-2 border-amber-500/80 shadow-sm hover:shadow-md transition-shadow relative">
+<div class="flex items-start justify-between gap-3 mb-1.5">
+<div class="flex items-center gap-2">
+<span class="text-base">📦</span>
+<h4 class="text-sm font-bold text-slate-900">Stock Bajo</h4>
+</div>
+<!-- Severity Badge: MEDIA -->
+<span class="alert-badge alert-badge-media inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wide bg-amber-100 text-amber-800 border border-amber-200">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                  MEDIA
+                </span>
+</div>
+<!-- Description -->
+<p class="text-xs text-slate-600 leading-relaxed">
+                Te sugerimos pedir <span class="font-bold text-slate-900">50 unidades de Maní Salado</span>. Se agotará en aproximadamente <span class="font-semibold text-amber-700">5 días</span>.
+              </p>
+<!-- Footer Actions -->
+<div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
+<button class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors">
+<i class="fa-solid fa-check text-[11px] text-slate-400"></i>
+<span class="">Marcar como leída</span>
+</button>
+<button class="alert-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-sm shadow-indigo-200 transition-colors">
+<span class="">GENERAR PEDIDO SUGERIDO</span>
+<i class="fa-solid fa-arrow-right text-[10px]"></i>
+</button>
+</div>
+</div>
+<!-- Card 4: CAJA CHICA / FALTA DE CAMBIO (FIX 3: BAJA - NUEVA) -->
+<div class="alert-card bg-white rounded-xl p-3.5 border-2 border-sky-400/80 shadow-sm hover:shadow-md transition-shadow relative">
+<div class="flex items-start justify-between gap-3 mb-1.5">
+<div class="flex items-center gap-2">
+<span class="text-base">🪙</span>
+<h4 class="text-sm font-bold text-slate-900">Caja Chica / Falta de Cambio</h4>
+</div>
+<!-- Severity Badge: BAJA -->
+<span class="alert-badge alert-badge-baja inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wide bg-sky-100 text-sky-800 border border-sky-200">
+<i class="fa-solid fa-circle-info text-[10px] text-sky-600"></i>
+                  BAJA
+                </span>
+</div>
+<!-- Description -->
+<p class="text-xs text-slate-600 leading-relaxed">
+                Revisa tu cambio. Los últimos 3 cierres tuvieron diferencia negativa o faltaron billetes chicos.
+              </p>
+<!-- Footer Actions -->
+<div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
+<button class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors">
+<i class="fa-solid fa-check text-[11px] text-slate-400"></i>
+<span class="">Marcar como leída</span>
+</button>
+<button class="alert-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-xs font-bold rounded-lg transition-colors">
+<i class="fa-solid fa-receipt text-[11px] text-slate-500"></i>
+<span class="">VER CIERRES</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Dropdown Footer -->
+<div class="px-5 py-2.5 bg-slate-50 border-t border-slate-100 rounded-b-2xl flex items-center justify-between text-[11px] text-slate-500">
+<span class="">Actualizado hace 1 min</span>
+<a class="font-semibold text-indigo-600 hover:underline" href="#">Ver historial en auditoría →</a>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-6 w-px bg-slate-200"></div>
+<!-- Status Badge: "CAJA ABIERTA" (green) -->
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 font-bold text-xs tracking-wide">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="">CAJA ABIERTA</span>
+</div>
+<!-- Red Button: "CERRAR CAJA" -->
+<button class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-sm shadow-rose-200 transition-colors">
+<i class="fa-solid fa-lock text-xs"></i>
+<span class="">CERRAR CAJA</span>
+</button>
+<!-- Terminal info & User -->
+<div class="flex items-center gap-2.5 pl-2 border-l border-slate-200"><div class="text-right leading-none"><div class="text-[11px] font-bold text-slate-800 tracking-tight">TERM-01 · CAJERO: GONZALO YANCE</div><div class="font-mono text-xs font-semibold text-slate-500 mt-0.5">14:32:05</div></div><div class="w-8 h-8 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center ring-2 ring-slate-100">GY</div></div>
+</div>
+</header>
+<!-- ================= SUB-HEADER / WORKSPACE VIEWPORT ================= -->
+<main class="flex-1 flex overflow-hidden relative">
+<!-- Left Column: POS Terminal Order View (Active Caja Context - visible e intacta) -->
+<div class="flex-1 flex flex-col bg-white border-r border-slate-200">
+<!-- Top Scanner Bar -->
+<div class="p-4 border-b border-slate-200 bg-slate-50/70 flex items-center gap-3">
+<div class="relative flex-1">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+<i class="fa-solid fa-barcode text-sm"></i>
+</div>
+<input class="w-full pl-10 pr-16 py-2.5 bg-white border border-slate-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none placeholder-slate-400" placeholder="Escanear código de barras o ingresar código [F2]..." type="text"/>
+<span class="absolute inset-y-0 right-0 pr-3 flex items-center text-xs font-mono text-slate-400 font-semibold">[F2]</span>
+</div>
+<button class="px-4 py-2.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold rounded-xl flex items-center gap-2 shadow-sm">
+<i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+<span class="">Buscar</span>
+</button>
+</div>
+<!-- Order Ticket Items (Caja Abierta state with sample items) -->
+<div class="flex-1 overflow-y-auto p-4 space-y-2">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-slate-200 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+<th class="pb-2">CÓDIGO</th>
+<th class="pb-2">DESCRIPCIÓN</th>
+<th class="pb-2 text-center">CANT</th>
+<th class="pb-2 text-right">P. UNIT</th>
+<th class="pb-2 text-right">SUBTOTAL</th>
+<th class="pb-2 text-center w-10">ACCIONES</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 text-sm">
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3 font-mono text-xs text-slate-500">7791234567890</td>
+<td class="py-3">
+<div class="font-bold text-slate-900">Coca Cola 2.25L</div>
+<div class="text-[11px] text-amber-600 font-semibold">⚠️ Margen desactualizado (8%)</div>
+</td>
+<td class="py-3 text-center">
+<span class="inline-block px-2 py-0.5 rounded bg-slate-100 font-bold text-slate-800">2</span>
+</td>
+<td class="py-3 text-right font-mono font-medium text-slate-700">$2,450.00</td>
+<td class="py-3 text-right font-mono font-bold text-slate-900">$4,900.00</td>
+<td class="py-3 text-center">
+<button class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-trash-can text-xs"></i></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3 font-mono text-xs text-slate-500">7793334445556</td>
+<td class="py-3">
+<div class="font-bold text-slate-900">Yerba Mate Playadito 1Kg</div>
+<div class="text-[11px] text-slate-400">Almacén • Con Palo</div>
+</td>
+<td class="py-3 text-center">
+<span class="inline-block px-2 py-0.5 rounded bg-slate-100 font-bold text-slate-800">1</span>
+</td>
+<td class="py-3 text-right font-mono font-medium text-slate-700">$4,100.00</td>
+<td class="py-3 text-right font-mono font-bold text-slate-900">$4,100.00</td>
+<td class="py-3 text-center">
+<button class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-trash-can text-xs"></i></button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3 font-mono text-xs text-slate-500">7795556667778</td>
+<td class="py-3">
+<div class="font-bold text-slate-900">Alfajor Havanna Chocolate 70g</div>
+<div class="text-[11px] text-slate-400">Golosinas</div>
+</td>
+<td class="py-3 text-center">
+<span class="inline-block px-2 py-0.5 rounded bg-slate-100 font-bold text-slate-800">3</span>
+</td>
+<td class="py-3 text-right font-mono font-medium text-slate-700">$1,500.00</td>
+<td class="py-3 text-right font-mono font-bold text-slate-900">$4,500.00</td>
+<td class="py-3 text-center">
+<button class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-trash-can text-xs"></i></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Bottom Summary & Action shortcuts -->
+<div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 font-medium">
+<div class="flex items-center gap-3 font-mono text-[11px]">
+<span class="bg-white px-2 py-1 rounded border border-slate-200 font-semibold">[F1] Ayuda</span>
+<span class="bg-white px-2 py-1 rounded border border-slate-200 font-semibold">[F2] Buscar</span>
+<span class="bg-white px-2 py-1 rounded border border-slate-200 font-semibold">[F4] Cobrar</span>
+<span class="bg-white px-2 py-1 rounded border border-slate-200 font-semibold">[ESC] Cancelar</span>
+</div>
+<div class="text-slate-500">
+          AFIP RG 1415: <span class="text-emerald-600 font-bold">ONLINE</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Quick Keys & Total Panel -->
+<div class="w-[380px] bg-slate-50 flex flex-col justify-between p-5 shrink-0">
+<!-- Fast Sale Grid -->
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+<i class="fa-solid fa-bolt text-indigo-600"></i>
+            Venta Rápida
+          </span>
+<span class="text-[11px] font-medium text-slate-400">12 Directos</span>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<button class="p-3 bg-white hover:bg-indigo-50/50 border border-slate-200 rounded-xl text-left shadow-xs transition-colors">
+<div class="text-xs font-semibold text-slate-800">Maní Salado</div>
+<div class="text-sm font-bold font-mono text-indigo-700 mt-1">$1,000</div>
+</button>
+<button class="p-3 bg-white hover:bg-indigo-50/50 border border-slate-200 rounded-xl text-left shadow-xs transition-colors">
+<div class="text-xs font-semibold text-slate-800">Palito Salado</div>
+<div class="text-sm font-bold font-mono text-indigo-700 mt-1">$1,000</div>
+</button>
+<button class="p-3 bg-white hover:bg-indigo-50/50 border border-slate-200 rounded-xl text-left shadow-xs transition-colors">
+<div class="text-xs font-semibold text-slate-800">Caramelo</div>
+<div class="text-sm font-bold font-mono text-indigo-700 mt-1">$500</div>
+</button>
+<button class="p-3 bg-white hover:bg-indigo-50/50 border border-slate-200 rounded-xl text-left shadow-xs transition-colors">
+<div class="text-xs font-semibold text-slate-800">Sand. Miga</div>
+<div class="text-sm font-bold font-mono text-indigo-700 mt-1">$3,000</div>
+</button>
+</div>
+</div>
+<!-- Checkout & Totals Card -->
+<div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+<div>
+<div class="flex justify-between text-xs text-slate-500 font-medium">
+<span class="">Subtotal (6 art.)</span>
+<span class="font-mono text-slate-700">$13.500</span>
+</div>
+<div class="flex justify-between text-xs text-slate-500 font-medium mt-1">
+<span class="">IVA (21%)</span>
+<span class="font-mono text-slate-700">$0 (Incluido)</span>
+</div>
+<div class="pt-3 mt-2 border-t border-slate-100 flex items-baseline justify-between">
+<span class="text-xs font-extrabold uppercase tracking-wider text-slate-900">TOTAL A PAGAR</span>
+<div class="text-right">
+<span class="text-2xl font-black font-mono text-indigo-700 tracking-tight">$13.500</span>
+</div>
+</div>
+</div>
+<button class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm rounded-xl shadow-md shadow-indigo-200 flex items-center justify-center gap-2 transition-all">
+<i class="fa-solid fa-money-bill-wave text-base"></i>
+<span class="">COBRAR [F4]</span>
+</button>
+</div>
+</div>
+</main>
+<script>
+    // Simple interactive toggle for notification bell
+    const bellBtn = document.getElementById('bellBtn');
+    const dropdown = document.getElementById('notificationDropdown');
+
+    if (bellBtn && dropdown) {
+      bellBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('hidden');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target) && !bellBtn.contains(e.target)) {
+          dropdown.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+</body></html>

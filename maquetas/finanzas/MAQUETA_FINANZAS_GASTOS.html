@@ -1,0 +1,127 @@
+<!DOCTYPE html><html class="h-full" lang="es" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>NEURORA POS - Finanzas (Gastos)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Hanken Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Hanken Grotesk', sans-serif;
+      user-select: none;
+    }
+    /* Hide scrollbars while maintaining clean desktop layout */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen w-screen overflow-hidden flex flex-col antialiased">
+<!-- TOP APP BAR / GLOBAL HEADER -->
+<header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0 z-20">
+<div class="flex items-center space-x-8">
+<!-- Brand Logo -->
+<div class="flex items-center space-x-2.5">
+<div class="w-9 h-9 rounded-lg bg-brand-800 flex items-center justify-center text-white shadow-sm">
+<i class="fa-solid fa-cash-register text-lg"></i>
+</div>
+<div class="flex flex-col">
+<span class="font-bold tracking-tight text-slate-900 text-lg leading-tight">NEURORA POS</span>
+
+</div>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex items-center space-x-1 pl-4 border-l border-slate-200"><a class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors" href="#">
+          CAJA
+        </a>
+<a class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors" href="#">
+          INVENTARIO
+        </a>
+<a class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors" href="#">
+          COMPRAS
+        </a>
+<a class="px-4 py-2 rounded-lg text-sm font-bold text-brand-800 bg-brand-50 border-b-2 border-brand-800 rounded-b-none transition-colors" href="#">
+          FINANZAS
+        </a>
+<a class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors" href="#">
+          REPORTES
+        </a>
+<a class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors" href="#">
+          CONFIG
+        </a></nav>
+</div>
+<!-- Right Header Controls: Status, Cashier & Register Actions -->
+<div class="flex items-center space-x-4"><button class="w-9 h-9 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-800 hover:bg-slate-50 flex items-center justify-center transition-colors"><i class="fa-regular fa-bell text-sm"></i></button>
+<!-- Status Badge -->
+<div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-600 border border-rose-200">
+<span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+<span class="">CAJA CERRADA</span>
+</div>
+<!-- Action Button -->
+<button class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-lg border border-brand-800 text-brand-800 bg-white hover:bg-brand-50 text-xs font-bold transition-all shadow-sm active:scale-95">
+<i class="fa-solid fa-key text-xs"></i>
+<span class="">ABRIR CAJA</span>
+</button>
+<!-- Terminal / Cashier Metadata -->
+<div class="flex items-center space-x-3 pl-3 border-l border-slate-200">
+<div class="text-right">
+<div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">TERM-01 • CAJERO: GONZALO YANCE</div>
+<div class="text-xs font-mono font-bold text-slate-700 leading-none">14:32:05</div>
+</div>
+<div class="w-9 h-9 rounded-full bg-brand-800 text-white flex items-center justify-center text-sm font-semibold shadow-sm">
+<i class="fa-solid fa-user"></i>
+</div>
+</div>
+</div>
+</header>
+<!-- BODY CONTENT AREA (TWO-PANEL WORKSPACE) -->
+<div class="flex-1 flex overflow-hidden">
+<!-- LEFT SIDEBAR (240px fixed) -->
+<aside class="w-60 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 p-4 select-none">
+<div>
+<!-- Section Title Header -->
+<div class="px-3 pb-3 border-b border-slate-100">
+<div class="text-[11px] font-bold tracking-wider text-brand-800 uppercase">Panel Financiero</div>
+<h2 class="text-base font-extrabold text-slate-900 tracking-tight">FINANZAS</h2>
+<p class="text-[11px] text-slate-400">Control de fondos y reservas</p>
+</div>
+<!-- Navigation Menu -->
+<nav class="mt-4 space-y-1.5"><a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium text-sm transition-all group" href="#"><div class="flex items-center space-x-3"><i class="fa-solid fa-chart-pie text-slate-400 group-hover:text-slate-600 w-4 text-center"></i><span class="">DASHBOARD</span></div></a><a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium text-sm transition-all group" href="#"><div class="flex items-center space-x-3"><i class="fa-solid fa-sack-dollar text-slate-400 group-hover:text-slate-600 w-4 text-center"></i><span class="">RESERVAS</span></div></a><a class="flex items-center justify-between px-3.5 py-2.5 rounded-lg bg-brand-50 text-brand-800 font-bold text-sm border-l-4 border-brand-800 transition-all" href="#"><div class="flex items-center space-x-3"><i class="fa-regular fa-credit-card text-brand-800 w-4 text-center"></i><span class="">GASTOS</span></div><i class="fa-solid fa-chevron-right text-xs text-brand-800"></i></a><a class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium text-sm transition-all group" href="#"><div class="flex items-center space-x-3"><i class="fa-solid fa-building-columns text-slate-400 group-hover:text-slate-600 w-4 text-center"></i><span class="">PATRIMONIO</span></div></a></nav>
+<!-- Secondary Section / Metas Rápidas -->
+</div>
+<!-- Sidebar Footer Status -->
+</aside>
+<!-- MAIN CONTENT PANEL (FLEXIBLE) -->
+<main class="flex-1 flex flex-col overflow-hidden bg-slate-50/60 p-6 space-y-5"><div class="flex items-center justify-between shrink-0"><h1 class="text-2xl font-black text-slate-900 tracking-tight">Gastos</h1><button class="inline-flex items-center space-x-2 px-3.5 py-2 rounded-lg bg-brand-800 hover:bg-brand-900 text-white text-xs font-bold shadow-xs transition-all active:scale-95"><i class="fa-solid fa-plus text-xs"></i><span class="">NUEVO GASTO</span></button></div><div class="overflow-auto no-scrollbar space-y-5 flex-1"><div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs"><div class="flex items-center space-x-2 pb-4 mb-4 border-b border-slate-100"><div class="w-7 h-7 rounded-lg bg-brand-50 text-brand-800 flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></div><h2 class="text-sm font-black text-slate-900">Nuevo Gasto</h2></div><form class="space-y-4"><div class="grid grid-cols-2 gap-4"><div class="space-y-1"><label class="block text-xs font-bold text-slate-700">Categoría <span class="text-rose-500">*</span></label><select class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand-800 focus:bg-white"><option>Luz</option><option>Agua</option><option>Alquiler</option><option>Sueldo</option><option>Proveedor</option><option>Internet</option><option>Rentas</option><option>Otro</option></select></div><div class="space-y-1"><label class="block text-xs font-bold text-slate-700">Monto <span class="text-rose-500">*</span></label><input class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 font-mono focus:outline-none focus:ring-1 focus:ring-brand-800 focus:bg-white" placeholder="$0.00" type="text"></div></div><div class="grid grid-cols-2 gap-4"><div class="space-y-1"><label class="block text-xs font-bold text-slate-700">Fecha <span class="text-rose-500">*</span></label><input class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand-800 focus:bg-white" type="date" value="2025-01-10"></div><div class="space-y-1"><label class="block text-xs font-bold text-slate-700">Detalle <span class="text-slate-400 font-normal">(opcional)</span></label><input class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand-800 focus:bg-white" placeholder="Factura Luz Diciembre" type="text"></div></div><div class="space-y-1"><label class="block text-xs font-bold text-slate-700">Vincular a Reserva <span class="text-slate-400 font-normal">(opcional)</span></label><select class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand-800 focus:bg-white"><option selected="">Sin vincular</option><option>Proveedor Aza ($15.000)</option><option>Alquiler Enero ($30.000)</option></select><p class="text-[11px] text-slate-400 pt-1">Si se selecciona, la reserva pasa a estado pagada</p></div><div class="pt-2 flex items-center justify-end space-x-2"><button class="px-4 py-2 rounded-lg border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors" type="button">CANCELAR</button><button class="px-4 py-2 rounded-lg bg-brand-800 hover:bg-brand-900 text-xs font-bold text-white transition-colors shadow-sm active:scale-95" type="button">GUARDAR GASTO</button></div></form></div><div class="bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col overflow-hidden"><div class="p-4 border-b border-slate-100 flex items-center justify-between shrink-0"><div class="flex items-center space-x-3"><h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Gastos Registrados</h3></div><div class="flex items-center space-x-3"><div class="relative"><i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-slate-400"></i><input class="pl-8 pr-3 py-1.5 bg-slate-50 hover:bg-slate-100/80 focus:bg-white text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-brand-800 w-56 text-slate-700 transition-all" placeholder="Filtrar gastos..." type="text"></div><button class="text-xs font-bold text-slate-600 hover:text-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 flex items-center space-x-1.5"><i class="fa-solid fa-filter text-slate-400 text-[10px]"></i><span class="">Filtros</span></button></div></div><div class="overflow-x-auto"><table class="w-full text-left border-collapse"><thead><tr class="bg-slate-50/80 border-b border-slate-200 text-[11px] font-black uppercase text-slate-400 tracking-wider"><th class="py-3 px-5">FECHA</th><th class="py-3 px-5">CATEGORÍA</th><th class="py-3 px-5">DETALLE</th><th class="py-3 px-5">MONTO</th><th class="py-3 px-5 text-right">ACCIONES</th></tr></thead><tbody class="divide-y divide-slate-100 text-sm"><tr class="hover:bg-slate-50/80 transition-colors"><td class="py-3.5 px-5"><div class="flex items-center space-x-2"><i class="fa-regular fa-calendar text-slate-400 text-xs"></i><span class="font-medium text-slate-700">10/01/2025</span></div></td><td class="py-3.5 px-5"><span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">Luz</span></td><td class="py-3.5 px-5"><span class="font-bold text-slate-900">Factura Luz Diciembre</span></td><td class="py-3.5 px-5"><span class="font-extrabold text-slate-900 text-base">$12.500</span></td><td class="py-3.5 px-5 text-right"><div class="inline-flex items-center space-x-2"><button class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all">EDITAR</button><button class="px-2.5 py-1.5 rounded-lg bg-white hover:bg-rose-50 border border-slate-200 hover:border-rose-200 text-slate-600 hover:text-rose-600 text-xs font-bold transition-all">ELIMINAR</button></div></td></tr><tr class="hover:bg-slate-50/80 transition-colors"><td class="py-3.5 px-5"><div class="flex items-center space-x-2"><i class="fa-regular fa-calendar text-slate-400 text-xs"></i><span class="font-medium text-slate-700">08/01/2025</span></div></td><td class="py-3.5 px-5"><span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">Alquiler</span></td><td class="py-3.5 px-5"><span class="font-bold text-slate-900">Alquiler Enero</span></td><td class="py-3.5 px-5"><span class="font-extrabold text-slate-900 text-base">$30.000</span></td><td class="py-3.5 px-5 text-right"><div class="inline-flex items-center space-x-2"><button class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all">EDITAR</button><button class="px-2.5 py-1.5 rounded-lg bg-white hover:bg-rose-50 border border-slate-200 hover:border-rose-200 text-slate-600 hover:text-rose-600 text-xs font-bold transition-all">ELIMINAR</button></div></td></tr><tr class="hover:bg-slate-50/80 transition-colors"><td class="py-3.5 px-5"><div class="flex items-center space-x-2"><i class="fa-regular fa-calendar text-slate-400 text-xs"></i><span class="font-medium text-slate-700">05/01/2025</span></div></td><td class="py-3.5 px-5"><span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">Proveedor</span></td><td class="py-3.5 px-5"><span class="font-bold text-slate-900">Compra mercadería Aza</span></td><td class="py-3.5 px-5"><span class="font-extrabold text-slate-900 text-base">$15.000</span></td><td class="py-3.5 px-5 text-right"><div class="inline-flex items-center space-x-2"><button class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all">EDITAR</button><button class="px-2.5 py-1.5 rounded-lg bg-white hover:bg-rose-50 border border-slate-200 hover:border-rose-200 text-slate-600 hover:text-rose-600 text-xs font-bold transition-all">ELIMINAR</button></div></td></tr></tbody></table></div></div></div><footer class="h-10 bg-white rounded-xl border border-slate-200 px-4 flex items-center justify-start text-xs font-medium text-slate-500 shrink-0"><a class="inline-flex items-center space-x-1.5 text-slate-600 hover:text-slate-900 font-bold transition-colors" href="#"><i class="fa-solid fa-arrow-left text-[11px]"></i><span class="">VOLVER A CAJA</span></a></footer></main>
+</div>
+
+
+</body></html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEURORA POS - Inventario (Piloto Visual)</title>
+  <link rel="stylesheet" href="core/core.css">
+  <link rel="stylesheet" href="modules/inventario/inventario.css">
+</head>
+<body class="bg-background text-on-surface font-body-md">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-brand-icon">
+        <span class="material-symbols-outlined">point_of_sale</span>
+      </div>
+      <span class="topbar-brand-text">NEURORA POS</span>
+    </div>
+    <nav class="topbar-tabs">
+      <a href="#" class="topbar-tab">CAJA</a>
+      <a href="#" class="topbar-tab active">INVENTARIO</a>
+      <a href="#" class="topbar-tab">COMPRAS</a>
+      <a href="#" class="topbar-tab">FINANZAS</a>
+      <a href="#" class="topbar-tab">REPORTES</a>
+      <a href="#" class="topbar-tab">CONFIG</a>
+    </nav>
+    <div class="topbar-actions">
+      <div class="badge-status closed">
+        <span class="badge-status-dot"></span>
+        CAJA CERRADA
+      </div>
+      <button class="btn btn-primary" style="height:2.25rem;padding:0 1rem;">
+        <span class="material-symbols-outlined" style="font-size:18px;">lock_open</span>
+        <span class="font-semibold">ABRIR CAJA</span>
+      </button>
+      <div style="height:1.5rem;width:1px;background:var(--color-outline-variant);"></div>
+      <div class="topbar-user">
+        <span class="topbar-user-name">Gonzalo Yance</span>
+        <span class="topbar-user-time">14:32:05</span>
+      </div>
+      <div class="topbar-user-avatar">
+        <span class="material-symbols-outlined">person</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main id="moduleContainer">
+    <div class="inv-layout">
+      
+      <!-- COLUMNA IZQUIERDA -->
+      <div class="inv-col-left">
+        <!-- Header con Chips -->
+        <div class="inv-header">
+          <div class="inv-header-title">
+            <h2 class="font-headline-md">Inventario</h2>
+            <div class="inv-table-actions">
+              <button class="btn btn-secondary">
+                <span class="material-symbols-outlined" style="font-size:18px;">upload</span>
+                IMPORTAR CSV
+              </button>
+              <button class="btn btn-secondary">
+                <span class="material-symbols-outlined" style="font-size:18px;">download</span>
+                EXPORTAR CSV
+              </button>
+              <button class="btn btn-primary">
+                <span class="material-symbols-outlined" style="font-size:18px;">add</span>
+                NUEVO
+              </button>
+            </div>
+          </div>
+          <div class="inv-chips">
+            <button class="inv-chip active">TODOS 1250</button>
+            <button class="inv-chip">VENCIDOS 0</button>
+            <button class="inv-chip">POR VENCER 12</button>
+            <button class="inv-chip">FALTANTES 5</button>
+            <button class="inv-chip">AGOTADOS 2</button>
+            <button class="inv-chip">NO FISCAL 45</button>
+            <button class="inv-chip">SUELTO 10</button>
+          </div>
+        </div>
+
+        <!-- Tabla de Productos -->
+        <div class="inv-table-container">
+          <table class="inv-table">
+            <thead>
+              <tr>
+                <th>CÓDIGO</th>
+                <th>NOMBRE</th>
+                <th>PRECIO</th>
+                <th>STOCK</th>
+                <th>ESTADO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="font-mono">7791234567890</td>
+                <td>
+                  <div class="font-semibold">Coca Cola 2.25L</div>
+                  <div class="font-body-sm text-on-surface-variant">Gaseosa Regular Retornable / Bebidas</div>
+                </td>
+                <td class="font-numeric-tape">$2.450</td>
+                <td class="font-numeric-tape">145</td>
+                <td><span class="material-symbols-outlined text-tertiary-fixed-dim" style="font-size:18px;">check_circle</span></td>
+              </tr>
+              <tr>
+                <td class="font-mono">7790001112223</td>
+                <td>
+                  <div class="font-semibold">Lays Clásicas 145g</div>
+                  <div class="font-body-sm text-on-surface-variant">Papas Fritas Saladas / Snacks</div>
+                </td>
+                <td class="font-numeric-tape">$1.800</td>
+                <td class="font-numeric-tape">0</td>
+                <td><span class="inv-badge inv-badge-agot">AGOT</span></td>
+              </tr>
+              <tr>
+                <td class="font-mono">7799998887776</td>
+                <td>
+                  <div class="font-semibold">Queso Rallado 130g</div>
+                  <div class="font-body-sm text-on-surface-variant">Reggianito Estacionado / Lácteos</div>
+                </td>
+                <td class="font-numeric-tape">$3.200</td>
+                <td class="font-numeric-tape">3</td>
+                <td><span class="inv-badge inv-badge-crit">CRIT</span></td>
+              </tr>
+              <tr>
+                <td class="font-mono">7791112223334</td>
+                <td>
+                  <div class="font-semibold">Leche Entera 1L</div>
+                  <div class="font-body-sm text-on-surface-variant">Fresca Pasteurizada / Lácteos</div>
+                </td>
+                <td class="font-numeric-tape">$1.500</td>
+                <td class="font-numeric-tape">50</td>
+                <td><span class="inv-badge inv-badge-vence">VENCE 15/01</span></td>
+              </tr>
+              <tr>
+                <td class="font-mono">7795556667778</td>
+                <td>
+                  <div class="font-semibold">Yogur Frutilla 200g</div>
+                  <div class="font-body-sm text-on-surface-variant">Yogur Entero / Lácteos</div>
+                </td>
+                <td class="font-numeric-tape">$800</td>
+                <td class="font-numeric-tape">20</td>
+                <td><span class="inv-badge inv-badge-vencido">VENCIDO</span></td>
+              </tr>
+              <tr class="inv-row-selected">
+                <td class="font-mono">7793334445556</td>
+                <td>
+                  <div class="font-semibold">Marlboro Rojo 20u</div>
+                  <div class="font-body-sm text-on-surface-variant">Cigarrillos Rubios / Cigarrillos</div>
+                </td>
+                <td class="font-numeric-tape">$1.200</td>
+                <td class="font-numeric-tape">100</td>
+                <td><span class="inv-badge inv-badge-suelto">SUELTO X</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="inv-table-footer">
+          <span>Mostrando 150 de 1250 productos</span>
+          <span class="font-label-sm">[F4] Guardar [ESC] Volver a CAJA</span>
+        </div>
+      </div>
+
+      <!-- COLUMNA DERECHA - Panel DETALLE -->
+      <div class="inv-col-right">
+        <div class="inv-detail-panel">
+          <div class="inv-detail-header">
+            <span class="material-symbols-outlined text-primary">edit</span>
+            <div>
+              <div class="font-headline-sm">Detalle de Producto</div>
+              <div class="font-body-sm text-on-surface-variant">Código: 7793334445556</div>
+            </div>
+          </div>
+
+          <!-- Campos Editables -->
+          <div class="inv-detail-section">
+            <div class="inv-form-group">
+              <label class="inv-form-label">NOMBRE COMERCIAL</label>
+              <input type="text" class="inv-form-input" value="Marlboro Rojo 20u">
+            </div>
+            
+            <div class="inv-form-group">
+              <label class="inv-form-label">CATEGORÍA</label>
+              <select class="inv-form-select">
+                <option>Bebidas</option>
+                <option>Snacks</option>
+                <option>Lácteos</option>
+                <option>Almacén</option>
+                <option selected>Cigarrillos</option>
+              </select>
+            </div>
+
+            <div class="inv-form-group">
+              <label class="inv-form-label">COSTO ($)</label>
+              <input type="number" class="inv-form-input" value="950" step="0.01">
+            </div>
+
+            <div class="inv-form-group">
+              <label class="inv-form-label">MARGEN (%)</label>
+              <input type="number" class="inv-form-input" value="26.32" step="0.01">
+            </div>
+
+            <div class="inv-form-group">
+              <label class="inv-form-label">P. VENTA AL PÚBLICO</label>
+              <input type="number" class="inv-form-input" value="1200" step="0.01">
+            </div>
+
+            <div class="inv-ganancia-neta positive">
+              <span class="material-symbols-outlined">trending_up</span>
+              <div>
+                <div class="font-label-sm">Ganancia Neta</div>
+                <div class="font-numeric-tape font-bold">+$250 (26.32%)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stock -->
+          <div class="inv-detail-section">
+            <div class="inv-detail-section-title">STOCK DISPONIBLE</div>
+            <div class="font-numeric-display text-primary">100 UNID.</div>
+            <div class="inv-stock-controls">
+              <button class="inv-stock-btn">+1</button>
+              <button class="inv-stock-btn">+5</button>
+              <button class="inv-stock-btn">+10</button>
+            </div>
+            
+            <div class="inv-form-group" style="margin-top:var(--space-md);">
+              <label class="inv-form-label">STOCK MÍNIMO</label>
+              <input type="number" class="inv-form-input" value="20">
+            </div>
+          </div>
+
+          <!-- Vencimiento -->
+          <div class="inv-detail-section">
+            <div class="inv-detail-section-title">VENCIMIENTO</div>
+            <div class="inv-form-group">
+              <input type="date" class="inv-form-input">
+            </div>
+            <div class="inv-form-group">
+              <label class="inv-form-label">AVISO DÍAS ANTES</label>
+              <input type="number" class="inv-form-input" value="7">
+            </div>
+          </div>
+
+          <!-- No Fiscal -->
+          <div class="inv-detail-section">
+            <div class="inv-detail-section-title">RÉGIMEN</div>
+            <label style="display:flex;align-items:center;gap:var(--space-sm);cursor:pointer;">
+              <input type="checkbox">
+              <span class="font-body-md">NO FISCAL - Excluir de controladores fiscales AFIP</span>
+            </label>
+          </div>
+
+          <!-- Historial de Movimientos -->
+          <div class="inv-movimientos">
+            <div class="inv-movimientos-header">
+              <span class="font-label-md font-semibold">📋 Últimos Movimientos</span>
+              <span class="material-symbols-outlined">expand_less</span>
+            </div>
+            <table class="inv-movimientos-table">
+              <thead>
+                <tr>
+                  <th>FECHA</th>
+                  <th>TIPO</th>
+                  <th>DELTA</th>
+                  <th>USUARIO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>10/01 14:32</td>
+                  <td>venta</td>
+                  <td class="text-error font-semibold">-2</td>
+                  <td>Gonzalo Yance</td>
+                </tr>
+                <tr>
+                  <td>09/01 09:15</td>
+                  <td>ajuste</td>
+                  <td class="text-tertiary-fixed-dim font-semibold">+10</td>
+                  <td>Admin</td>
+                </tr>
+                <tr>
+                  <td>08/01 16:45</td>
+                  <td>venta</td>
+                  <td class="text-error font-semibold">-1</td>
+                  <td>Gonzalo Yance</td>
+                </tr>
+                <tr>
+                  <td>07/01 11:20</td>
+                  <td>recepcion</td>
+                  <td class="text-tertiary-fixed-dim font-semibold">+50</td>
+                  <td>Admin</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Botones de Acción -->
+          <div class="inv-actions">
+            <button class="btn btn-primary">
+              <span class="material-symbols-outlined" style="font-size:18px;">save</span>
+              ACTUALIZAR
+            </button>
+            <button class="btn btn-secondary">
+              <span class="material-symbols-outlined" style="font-size:18px;">backspace</span>
+              LIMPIAR
+            </button>
+            <button class="btn btn-secondary">
+              <span class="material-symbols-outlined" style="font-size:18px;">add_circle</span>
+              NUEVO
+            </button>
+            <button class="btn btn-danger">
+              <span class="material-symbols-outlined" style="font-size:18px;">delete</span>
+              BAJA
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</body>
+</html>

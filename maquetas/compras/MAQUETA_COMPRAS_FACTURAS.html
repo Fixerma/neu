@@ -1,0 +1,641 @@
+<!DOCTYPE html><html lang="es" class="h-full"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEURORA POS - Compras (Facturas)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Hanken Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff4ff',
+              100: '#dbe7fe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Hanken Grotesk', sans-serif;
+      user-select: none;
+    }
+    /* Hide scrollbars for clean zero-scroll POS interface */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="h-full bg-slate-50 text-slate-800 flex flex-col overflow-hidden text-sm">
+
+  <!-- ================= TOPBAR ================= -->
+  <header class="h-14 bg-white border-b border-slate-200 px-4 flex items-center justify-between shrink-0 z-20">
+    <!-- Left: Brand + Nav tabs -->
+    <div class="flex items-center gap-6">
+      <!-- Brand -->
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-800 to-indigo-600 flex items-center justify-center text-white shadow-sm font-bold text-base">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+          </svg>
+        </div>
+        <span class="font-extrabold text-base tracking-tight text-slate-900">NEURORA POS</span>
+      </div>
+
+      <!-- Navigation 6 Solapas -->
+      <nav class="flex items-center gap-1 font-semibold text-xs tracking-wider uppercase">
+        <a href="#" class="px-3 py-4 text-slate-600 hover:text-slate-900 transition-colors">CAJA</a>
+        <a href="#" class="px-3 py-4 text-slate-600 hover:text-slate-900 transition-colors">INVENTARIO</a>
+        <a href="#" class="px-3 py-4 text-brand-800 border-b-2 border-brand-800 font-bold transition-colors">COMPRAS</a>
+        <a href="#" class="px-3 py-4 text-slate-600 hover:text-slate-900 transition-colors">FINANZAS</a>
+        <a href="#" class="px-3 py-4 text-slate-600 hover:text-slate-900 transition-colors">REPORTES</a>
+        <a href="#" class="px-3 py-4 text-slate-600 hover:text-slate-900 transition-colors">CONFIG</a>
+      </nav>
+
+      <!-- Bell notification -->
+      <button class="relative p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-colors" title="Notificaciones">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+        </svg>
+        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+      </button>
+    </div>
+
+    <!-- Right: Caja status + Operador -->
+    <div class="flex items-center gap-4">
+      <!-- Badge Caja Cerrada -->
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-700 border border-red-200">
+        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+        CAJA CERRADA
+      </span>
+
+      <!-- Botón Abrir Caja -->
+      <button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-800 text-white hover:bg-brand-900 shadow-sm transition-colors">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+        </svg>
+        ABRIR CAJA
+      </button>
+
+      <div class="h-6 w-px bg-slate-200 mx-1"></div>
+
+      <!-- User metadata -->
+      <div class="flex items-center gap-2.5 pl-1">
+        <div class="text-right leading-tight">
+          <div class="text-[11px] font-bold text-slate-700 tracking-wider">TERM-01 · CAJERO: GONZALO YANCE</div>
+          <div class="text-xs font-semibold text-slate-500 font-mono">14:32:05</div>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-brand-900 text-white font-bold flex items-center justify-center text-xs shadow-inner">
+          GY
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= BODY: SIDEBAR + MAIN ================= -->
+  <div class="flex-1 flex overflow-hidden">
+
+    <!-- ================= SIDEBAR IZQUIERDA (240px fija) ================= -->
+    <aside class="w-[240px] bg-[#f8f9fa] border-r border-slate-200 flex flex-col justify-between shrink-0 select-none">
+      <div class="p-4">
+        <!-- Headers -->
+        <div class="mb-4">
+          <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">GESTIÓN DE ABASTECIMIENTO</div>
+          <h2 class="text-base font-extrabold text-slate-900 tracking-tight">COMPRAS</h2>
+          <p class="text-xs text-slate-500 leading-tight">Gestión de proveedores, pedidos y facturas</p>
+        </div>
+
+        <!-- 3 Secciones clickeables -->
+        <nav class="space-y-1 pt-2">
+          <!-- 1. Proveedores -->
+          <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-200/60 font-semibold transition-colors group">
+            <div class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-slate-500 group-hover:text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+              </svg>
+              <span class="">PROVEEDORES</span>
+            </div>
+          </a>
+
+          <!-- 2. Pedidos -->
+          <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-200/60 font-semibold transition-colors group">
+            <div class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-slate-500 group-hover:text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+              </svg>
+              <span class="">PEDIDOS</span>
+            </div>
+            <span class="px-1.5 py-0.5 text-[10px] font-bold bg-slate-200 text-slate-600 rounded">4</span>
+          </a>
+
+          <!-- 3. Facturas (ACTIVA) -->
+          <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-blue-50 text-brand-800 font-bold border-l-4 border-brand-800 transition-colors shadow-xs">
+            <div class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-brand-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              <span class="">FACTURAS</span>
+            </div>
+            <svg class="w-4 h-4 text-brand-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Footer de Sidebar -->
+      
+    </aside>
+
+    <!-- ================= MAIN PANEL DERECHO ================= -->
+    <main class="flex-1 flex flex-col bg-slate-50 overflow-hidden">
+
+      <!-- Breadcrumbs & Header -->
+      <div class="p-6 pb-4 bg-white border-b border-slate-200 shrink-0">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
+              <span class="">COMPRAS</span>
+              <span class="">›</span>
+              <span class="">GESTIÓN COMERCIAL</span>
+              <span class="">›</span>
+              <span class="text-brand-800 font-bold">FACTURAS REGISTRADAS</span>
+              <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                ● 3 Procesadas
+              </span>
+            </div>
+            <h1 class="text-2xl font-black text-slate-900 tracking-tight">Facturas</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Carga directa de facturas o recepción de mercadería desde pedidos.</p>
+          </div>
+
+          <!-- Botón superior derecho: + CARGAR FACTURA -->
+          <div class="flex items-center gap-3">
+            <button onclick="openModal('modalCargarFactura')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-extrabold bg-brand-800 hover:bg-brand-900 text-white shadow-sm hover:shadow transition-all active:scale-[0.98]">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
+              </svg>
+              + CARGAR FACTURA
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Area (Tabla de Facturas Cargadas) -->
+      <div class="flex-1 p-6 overflow-y-auto">
+        <div class="bg-white border border-slate-200 rounded-xl shadow-xs overflow-hidden flex flex-col">
+
+          <!-- Header de tabla con filtros rápidos -->
+          <div class="p-3.5 px-4 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Comprobantes Recibidos</span>
+              <span class="text-xs text-slate-400 font-medium">| Filtro: Todos los períodos</span>
+            </div>
+            
+          </div>
+
+          <!-- TABLA DE FACTURAS CARGADAS -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">
+                  <th class="py-3 px-4">N° FACTURA</th>
+                  <th class="py-3 px-4">PROVEEDOR</th>
+                  <th class="py-3 px-4">FECHA</th>
+                  <th class="py-3 px-4 text-center">TIPO</th>
+                  <th class="py-3 px-4 text-right">TOTAL</th>
+                  <th class="py-3 px-4 text-center">ESTADO</th>
+                  <th class="py-3 px-4 text-right">ACCIONES</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-xs font-medium">
+
+                <!-- FILA 1: FAC-001 -->
+                <tr class="hover:bg-slate-50/80 transition-colors">
+                  <td class="py-3.5 px-4 font-bold text-brand-800 font-mono text-[13px]">FAC-001</td>
+                  <td class="py-3.5 px-4">
+                    <div class="font-bold text-slate-800">Distribuidora Aza S.A.</div>
+                    <div class="text-[11px] text-slate-400">CUIT: 30-71442981-4 · Orden #OC-001</div>
+                  </td>
+                  <td class="py-3.5 px-4 text-slate-600 font-mono">10/01/2025</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                      TIPO A
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right font-extrabold text-slate-900 text-[13px] font-mono">$ 145.200</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Procesada
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right">
+                    <button onclick="openModal('modalDetalleFactura')" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-colors active:scale-95 shadow-xs">
+                      <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                      </svg>
+                      VER DETALLE
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- FILA 2: FAC-002 -->
+                <tr class="hover:bg-slate-50/80 transition-colors">
+                  <td class="py-3.5 px-4 font-bold text-brand-800 font-mono text-[13px]">FAC-002</td>
+                  <td class="py-3.5 px-4">
+                    <div class="font-bold text-slate-800">Mayorista del Norte S.R.L.</div>
+                    <div class="text-[11px] text-slate-400">CUIT: 30-68912245-9 · Orden #OC-002</div>
+                  </td>
+                  <td class="py-3.5 px-4 text-slate-600 font-mono">08/01/2025</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-300">
+                      TIPO B
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right font-extrabold text-slate-900 text-[13px] font-mono">$ 89.500</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Procesada
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right">
+                    <button onclick="openModal('modalDetalleFactura')" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-colors active:scale-95 shadow-xs">
+                      <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                      </svg>
+                      VER DETALLE
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- FILA 3: FAC-003 -->
+                <tr class="hover:bg-slate-50/80 transition-colors">
+                  <td class="py-3.5 px-4 font-bold text-brand-800 font-mono text-[13px]">FAC-003</td>
+                  <td class="py-3.5 px-4">
+                    <div class="font-bold text-slate-800">Limpiezas Express S.A.</div>
+                    <div class="text-[11px] text-slate-400">CUIT: 33-70982314-9 · Orden #OC-003</div>
+                  </td>
+                  <td class="py-3.5 px-4 text-slate-600 font-mono">05/01/2025</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-flex items-center justify-center px-2.5 py-0.5 rounded text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                      TIPO A
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right font-extrabold text-slate-900 text-[13px] font-mono">$ 32.000</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Procesada
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right">
+                    <button onclick="openModal('modalDetalleFactura')" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-colors active:scale-95 shadow-xs">
+                      <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                      </svg>
+                      VER DETALLE
+                    </button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Tabla footer -->
+          <div class="p-3 px-4 bg-slate-50 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
+            <div>
+              <span class="">Mostrando 3 comprobantes</span>
+            </div>
+            <div class="flex items-center gap-4 text-xs font-semibold">
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded bg-blue-500"></span> Tipo A (Crédito Fiscal)
+              </span>
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded bg-slate-400"></span> Tipo B (Consumidor Final / Exento)
+              </span>
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded bg-amber-500"></span> Tipo X (No Fiscal)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Caja de Información / Guía del Sistema -->
+        <div class="mt-4 p-3.5 bg-blue-50 border border-blue-200 rounded-xl flex items-start gap-3">
+          <div class="text-xl">💡</div>
+          <div class="text-xs text-blue-900 leading-relaxed">
+            <span class="font-bold">Regla de Imputación de Costo Real:</span> Las facturas cargadas como <span class="font-bold">Tipo A</span> y <span class="font-bold">Tipo B</span> aplican un factor del <span class="font-bold">70%</span> para el cálculo del costo real del inventario comercial. Los comprobantes <span class="font-bold">Tipo X</span> computan automáticamente el <span class="font-bold">50%</span> del valor nominal. Puedes cargar una factura directa o recepcionar desde el módulo de Pedidos.
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= FOOTER DEL PANEL PRINCIPAL ================= -->
+      <footer class="h-12 bg-white border-t border-slate-200 px-6 flex items-center justify-between shrink-0 text-xs">
+        <button class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 font-bold transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          VOLVER A CAJA
+        </button>
+
+        <div class="text-slate-500 font-semibold">
+          Registros: <span class="text-slate-900 font-bold">3 Facturas</span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="flex items-center gap-1.5 text-slate-500">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Módulo Compras Activo
+          </span>
+          <span class="text-slate-300">|</span>
+          <span class="font-mono font-bold text-slate-700">Moneda: ARS ($)</span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- ================= MODAL: CARGAR FACTURA ================= -->
+  <div id="modalCargarFactura" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-150">
+      <!-- Modal Header -->
+      <div class="p-4 px-6 border-b border-slate-200 bg-slate-50/80 flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-black text-slate-900">Cargar Factura</h2>
+          <p class="text-xs text-slate-500">Registrar nuevo comprobante de compra e impacto en inventario</p>
+        </div>
+        <button onclick="closeModal('modalCargarFactura')" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-200/60 transition-colors">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body (Form) -->
+      <div class="p-6 overflow-y-auto space-y-4 text-xs">
+        <!-- Campos Principales -->
+        <div class="grid grid-cols-3 gap-3">
+          <!-- Proveedor -->
+          <div class="col-span-1">
+            <label class="block font-bold text-slate-700 mb-1">PROVEEDOR *</label>
+            <select class="w-full h-9 px-2.5 rounded-lg border border-slate-300 bg-white font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-800">
+              <option value="1">Distribuidora Aza S.A.</option>
+              <option value="2">Mayorista del Norte S.R.L.</option>
+              <option value="3">Limpiezas Express S.A.</option>
+            </select>
+          </div>
+
+          <!-- Fecha -->
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">FECHA *</label>
+            <input type="date" value="2025-01-10" class="w-full h-9 px-2.5 rounded-lg border border-slate-300 bg-white font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-800">
+          </div>
+
+          <!-- Tipo Factura -->
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">TIPO FACTURA *</label>
+            <select class="w-full h-9 px-2.5 rounded-lg border border-slate-300 bg-white font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-800">
+              <option value="A" selected="">Tipo A (Responsable Inscripto)</option>
+              <option value="B">Tipo B (Monotributo / Consumidor)</option>
+              <option value="X">Tipo X (No Fiscal / Remito)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Nota / Info de herencia de factura -->
+        <div class="text-[11px] text-slate-500 bg-slate-50 p-2 rounded-lg border border-slate-200 flex items-center justify-between">
+          <span class="">* Heredado automáticamente del proveedor seleccionado (editable)</span>
+          <span class="font-bold text-brand-800">A/B = 70% costo real · X = 50% costo real</span>
+        </div>
+
+        <!-- Tabla de Ítems del Formulario -->
+        <div class="border border-slate-200 rounded-xl overflow-hidden mt-2">
+          <div class="p-2.5 px-3 bg-slate-50 border-b border-slate-200 font-bold text-[11px] text-slate-600 uppercase tracking-wider flex items-center justify-between">
+            <span class="">Artículos Incluidos en la Factura</span>
+            <span class="text-slate-400 font-medium">3 productos</span>
+          </div>
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-100/70 text-[10px] font-bold text-slate-500 uppercase border-b border-slate-200">
+                <th class="py-2 px-3">PRODUCTO</th>
+                <th class="py-2 px-2 text-center w-20">CANTIDAD</th>
+                <th class="py-2 px-3 text-right">PRECIO UNITARIO</th>
+                <th class="py-2 px-3 text-right">SUBTOTAL</th>
+                <th class="py-2 px-2 text-center w-10">✕</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 font-medium">
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-slate-800">Coca Cola 2.25L</td>
+                <td class="py-2.5 px-2 text-center">
+                  <input type="number" value="24" class="w-14 text-center py-1 rounded border border-slate-300 font-bold font-mono">
+                </td>
+                <td class="py-2.5 px-3 text-right font-mono text-slate-700">$ 2.200</td>
+                <td class="py-2.5 px-3 text-right font-bold font-mono text-slate-900">$ 52.800</td>
+                <td class="py-2.5 px-2 text-center">
+                  <button class="text-red-500 hover:text-red-700 p-1" title="Eliminar ítem">🗑️</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-slate-800">Agua Mineral 1.5L</td>
+                <td class="py-2.5 px-2 text-center">
+                  <input type="number" value="48" class="w-14 text-center py-1 rounded border border-slate-300 font-bold font-mono">
+                </td>
+                <td class="py-2.5 px-3 text-right font-mono text-slate-700">$ 800</td>
+                <td class="py-2.5 px-3 text-right font-bold font-mono text-slate-900">$ 38.400</td>
+                <td class="py-2.5 px-2 text-center">
+                  <button class="text-red-500 hover:text-red-700 p-1" title="Eliminar ítem">🗑️</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-slate-800">Cerveza Quilmes 1L</td>
+                <td class="py-2.5 px-2 text-center">
+                  <input type="number" value="36" class="w-14 text-center py-1 rounded border border-slate-300 font-bold font-mono">
+                </td>
+                <td class="py-2.5 px-3 text-right font-mono text-slate-700">$ 1.500</td>
+                <td class="py-2.5 px-3 text-right font-bold font-mono text-slate-900">$ 54.000</td>
+                <td class="py-2.5 px-2 text-center">
+                  <button class="text-red-500 hover:text-red-700 p-1" title="Eliminar ítem">🗑️</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="p-2.5 px-3 bg-slate-50/80 border-t border-slate-200 flex items-center justify-between">
+            <button class="inline-flex items-center gap-1 text-xs font-bold text-brand-800 hover:text-brand-900">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
+              </svg>
+              + AGREGAR ÍTEM
+            </button>
+            <div class="flex items-center gap-2">
+              <span class="text-slate-500 font-semibold">Total de la factura:</span>
+              <span class="text-base font-black text-slate-900 font-mono">$ 145.200</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info Box (Azul claro) -->
+        <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl flex items-center gap-2.5 text-blue-900">
+          <span class="text-base">💡</span>
+          <span class="text-[11px] leading-snug">
+            <span class="font-bold">Al confirmar, se actualizará el stock</span> y el costo de los productos según el tipo de factura (<span class="font-bold">A/B = 70%</span>, <span class="font-bold">X = 50%</span>).
+          </span>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 px-6 border-t border-slate-200 bg-slate-50 flex items-center justify-end gap-2.5">
+        <button onclick="closeModal('modalCargarFactura')" class="px-4 py-2 rounded-lg border border-slate-300 text-slate-700 font-bold hover:bg-slate-100 transition-colors">
+          CANCELAR
+        </button>
+        <button onclick="closeModal('modalCargarFactura')" class="px-5 py-2 rounded-lg bg-brand-800 hover:bg-brand-900 text-white font-extrabold shadow-sm transition-colors">
+          CONFIRMAR FACTURA
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: VER DETALLE DE FACTURA ================= -->
+  <div id="modalDetalleFactura" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4 z-50"><div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-150">
+      <!-- Modal Header -->
+      <div class="p-4 px-6 border-b border-slate-200 bg-slate-50/80 flex items-center justify-between">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="text-lg font-black text-slate-900">Detalle de Factura - FAC-001</h2>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">
+              Procesada
+            </span>
+          </div>
+          <p class="text-xs text-slate-500">Comprobante de compra y detalle de artículos ingresados</p>
+        </div>
+        <button onclick="closeModal('modalDetalleFactura')" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-200/60 transition-colors">
+          <span class="material-symbols-outlined text-lg leading-none">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto space-y-4 text-xs">
+        <!-- Información General (Card resumen limpio) -->
+        <div class="grid grid-cols-4 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+          <div>
+            <span class="block text-[10px] font-bold text-slate-400 uppercase">PROVEEDOR</span>
+            <span class="font-extrabold text-slate-800 text-xs">Distribuidora Aza S.A.</span>
+          </div>
+          <div>
+            <span class="block text-[10px] font-bold text-slate-400 uppercase">FECHA EMISIÓN</span>
+            <span class="font-bold text-slate-700 font-mono">10/01/2025</span>
+          </div>
+          <div>
+            <span class="block text-[10px] font-bold text-slate-400 uppercase">TIPO FACTURA</span>
+            <span class="inline-flex items-center px-2 py-0.5 mt-0.5 rounded text-[11px] font-bold bg-blue-100 text-blue-800">
+              Tipo A
+            </span>
+          </div>
+          <div class="text-right">
+            <span class="block text-[10px] font-bold text-slate-400 uppercase">TOTAL FACTURADO</span>
+            <span class="font-black text-slate-900 text-sm font-mono">$ 145.200</span>
+          </div>
+        </div>
+
+        <!-- Tabla de Ítems Limpia -->
+        <div class="border border-slate-200 rounded-xl overflow-hidden">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-100 text-[10px] font-bold text-slate-500 uppercase border-b border-slate-200">
+                <th class="py-2.5 px-3">PRODUCTO</th>
+                <th class="py-2.5 px-2 text-center">CANTIDAD</th>
+                <th class="py-2.5 px-3 text-right">PRECIO UNITARIO</th>
+                <th class="py-2.5 px-3 text-right">SUBTOTAL</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 font-medium">
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-slate-800">Coca Cola 2.25L</td>
+                <td class="py-2.5 px-2 text-center font-mono font-bold">24</td>
+                <td class="py-2.5 px-3 text-right font-mono text-slate-600">$ 2.200</td>
+                <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">$ 52.800</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-slate-800">Agua Mineral 1.5L</td>
+                <td class="py-2.5 px-2 text-center font-mono font-bold">48</td>
+                <td class="py-2.5 px-3 text-right font-mono text-slate-600">$ 800</td>
+                <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">$ 38.400</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-slate-800">Cerveza Quilmes 1L</td>
+                <td class="py-2.5 px-2 text-center font-mono font-bold">36</td>
+                <td class="py-2.5 px-3 text-right font-mono text-slate-600">$ 1.500</td>
+                <td class="py-2.5 px-3 text-right font-mono font-bold text-slate-900">$ 54.000</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr class="bg-slate-50 border-t border-slate-200 font-bold">
+                <td colspan="3" class="py-2.5 px-3 text-slate-600 text-right">TOTAL REGISTRADO:</td>
+                <td class="py-2.5 px-3 text-right font-mono font-black text-slate-900 text-sm">$ 145.200</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-3.5 px-6 border-t border-slate-200 bg-slate-50 flex items-center justify-end">
+        <button onclick="closeModal('modalDetalleFactura')" class="px-5 py-2 rounded-lg border border-slate-300 text-slate-700 font-bold hover:bg-slate-100 transition-colors">
+          CERRAR
+        </button>
+      </div>
+    </div></div>
+
+  <!-- Interactive Scripts for modal control -->
+  <script>
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.remove('hidden');
+      }
+    }
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add('hidden');
+      }
+    }
+
+    // Escape key closes modals
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal('modalCargarFactura');
+        closeModal('modalDetalleFactura');
+      }
+    });
+  </script>
+
+
+
+
+</body></html>

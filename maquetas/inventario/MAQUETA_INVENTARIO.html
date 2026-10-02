@@ -1,0 +1,619 @@
+<!DOCTYPE html><html class="h-full overflow-hidden" lang="es"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Hanken+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;height:100%;overflow:hidden;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-container": "#00563a", "on-secondary": "#ffffff", "secondary-fixed": "#dae2fd", "primary-fixed-dim": "#b8c4ff", "outline": "#757684", "on-primary": "#ffffff", "on-error": "#ffffff", "surface-container": "#e5eeff", "surface-variant": "#d3e4fe", "on-tertiary": "#ffffff", "tertiary": "#003d27", "on-secondary-fixed-variant": "#3f465c", "secondary": "#565e74", "tertiary-fixed": "#6ffbbe", "surface-container-high": "#dce9ff", "on-tertiary-container": "#3fd298", "primary-container": "#1e40af", "secondary-container": "#dae2fd", "surface-bright": "#f8f9ff", "inverse-surface": "#213145", "on-secondary-container": "#5c647a", "error-container": "#ffdad6", "surface-container-lowest": "#ffffff", "on-secondary-fixed": "#131b2e", "on-primary-fixed-variant": "#173bab", "on-tertiary-fixed-variant": "#005236", "on-background": "#0b1c30", "on-primary-container": "#a8b8ff", "surface-tint": "#3755c3", "error": "#ba1a1a", "outline-variant": "#c4c5d5", "on-surface-variant": "#444653", "inverse-primary": "#b8c4ff", "inverse-on-surface": "#eaf1ff", "on-surface": "#0b1c30", "tertiary-fixed-dim": "#4edea3", "background": "#f8f9ff", "surface-container-highest": "#d3e4fe", "surface": "#f8f9ff", "primary-fixed": "#dde1ff", "on-tertiary-fixed": "#002113", "surface-dim": "#cbdbf5", "secondary-fixed-dim": "#bec6e0", "on-error-container": "#93000a", "surface-container-low": "#eff4ff", "primary": "#00288e", "on-primary-fixed": "#001453" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "margin": "1rem", "space-xs": "0.25rem", "space-lg": "1rem", "space-md": "0.75rem", "space-xl": "1.5rem", "gutter": "0.75rem", "space-sm": "0.5rem" }, "fontFamily": { "headline-sm": [ "Hanken Grotesk" ], "label-sm": [ "Geist" ], "numeric-tape": [ "Geist" ], "body-lg": [ "Geist" ], "headline-md": [ "Hanken Grotesk" ], "label-md": [ "Geist" ], "numeric-display": [ "Geist" ], "body-sm": [ "Geist" ], "body-md": [ "Geist" ], "label-lg": [ "Geist" ], "headline-lg": [ "Hanken Grotesk" ], "headline-xl": [ "Hanken Grotesk" ] }, "fontSize": { "headline-sm": [ "15px", { "lineHeight": "20px", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "numeric-tape": [ "15px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "headline-md": [ "18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" } ], "numeric-display": [ "36px", { "lineHeight": "40px", "letterSpacing": "-0.03em", "fontWeight": "600" } ], "body-sm": [ "12px", { "lineHeight": "16px", "fontWeight": "400" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" } ], "headline-lg": [ "24px", { "lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "700" } ], "headline-xl": [ "32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" } ] } } } };</script></head><body class="h-screen w-screen overflow-hidden bg-background font-body-md text-on-surface antialiased select-none flex flex-col">
+<!-- TOPBAR -->
+<header class="h-14 w-full z-50 bg-surface-container-lowest border-b border-outline-variant shrink-0 flex items-center justify-between px-space-lg">
+<div class="flex items-center gap-space-xl">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[18px]">point_of_sale</span>
+</div>
+<span class="font-headline-sm text-headline-sm tracking-tight uppercase text-on-surface">NEURORA POS</span>
+</div>
+<nav class="flex items-center gap-space-lg h-14">
+<a class="h-14 inline-flex items-center px-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="terminal-pos" href="#">CAJA</a>
+<a aria-current="page" class="h-14 inline-flex items-center px-space-xs transition-colors border-b-2 border-primary text-primary font-semibold text-label-lg" data-path="inventario" href="#">INVENTARIO</a>
+<a class="h-14 inline-flex items-center px-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="compras" href="#">COMPRAS</a>
+<a class="h-14 inline-flex items-center px-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="finanzas" href="#">FINANZAS</a>
+<a class="h-14 inline-flex items-center px-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="reportes" href="#">REPORTES</a>
+<a class="h-14 inline-flex items-center px-space-xs font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="configuracion" href="#">CONFIG</a>
+</nav>
+</div>
+<div class="flex items-center gap-space-md">
+<button class="w-8 h-8 rounded-full hover:bg-surface-container text-on-surface-variant hover:text-on-surface flex items-center justify-center transition-colors" title="Notificaciones" type="button">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<div class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-error-container text-on-error-container border border-error/20">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold text-error">CAJA CERRADA</span>
+</div>
+<button class="h-9 px-space-md inline-flex items-center gap-space-xs rounded bg-primary-container text-on-primary hover:bg-primary font-label-md text-label-md font-semibold transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">key</span>
+<span class="">ABRIR CAJA</span>
+</button>
+<div class="h-6 w-px bg-outline-variant"></div>
+<div class="hidden md:flex flex-col text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant">TERM-01 • CAJERO: GONZALO YANCE</span>
+<span class="font-numeric-tape text-numeric-tape text-on-surface font-semibold">14:32:05</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+</div>
+</header>
+<!-- MAIN WORKSPACE -->
+<main class="flex-1 flex flex-row min-h-0 w-full overflow-hidden bg-background">
+<!-- LEFT RAIL: TABLA Y FILTROS -->
+<section class="flex-1 flex flex-col min-w-0 h-full bg-surface-bright border-r border-outline-variant/60">
+<!-- Search Bar & Scanner Tag -->
+<div class="p-space-md bg-surface-container-lowest border-b border-outline-variant/60 flex items-center gap-space-md shrink-0">
+<div class="relative flex-1 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px] pointer-events-none group-focus-within:text-primary transition-colors">
+          search
+        </span>
+<input class="w-full h-10 pl-10 pr-24 bg-surface-container-low text-on-surface placeholder:text-outline font-body-md text-body-md rounded border border-outline-variant/60 focus:outline-none focus:border-primary-container focus:bg-surface-container-lowest transition-all" id="inventory-search" placeholder="Buscar por código o nombre..." type="text">
+<div class="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm border border-outline-variant">F2</kbd>
+<button class="w-6 h-6 flex items-center justify-center rounded hover:bg-surface-container text-outline hover:text-on-surface transition-colors" onclick="document.getElementById('inventory-search').value='';document.getElementById('inventory-search').dispatchEvent(new Event('input'))" title="Limpiar búsqueda" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+<div class="hidden sm:flex items-center gap-space-xs text-on-surface-variant font-label-md text-label-md shrink-0 px-2.5 py-1.5 bg-surface-container-low rounded border border-outline-variant/60">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container">barcode_scanner</span>
+<span class="font-semibold text-tertiary-container tracking-wide">[ESCÁNER LISTO]</span>
+</div>
+</div>
+<!-- Filter Chips Carousel -->
+<div class="px-space-md py-space-sm bg-surface-container-lowest border-b border-outline-variant/60 overflow-x-auto no-scrollbar flex items-center gap-2 shrink-0">
+<button class="filter-chip inline-flex items-center gap-1.5 h-7 px-3 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold tracking-wide shadow-sm shrink-0 transition-transform active:scale-95" type="button">
+<span class="">TODOS</span>
+<span class="bg-primary/40 text-on-primary px-1.5 py-0.2 rounded-full text-[10px]">1250</span>
+</button>
+<button class="filter-chip inline-flex items-center gap-1.5 h-7 px-3 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium border border-outline-variant/60 shrink-0 transition-colors" type="button">
+<span class="">VENCIDOS</span>
+<span class="bg-surface-container-high text-on-surface-variant px-1.5 py-0.2 rounded-full text-[10px]">0</span>
+</button>
+<button class="filter-chip inline-flex items-center gap-1.5 h-7 px-3 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium border border-outline-variant/60 shrink-0 transition-colors" type="button">
+<span class="">POR VENCER</span>
+<span class="bg-surface-container-high text-on-surface-variant px-1.5 py-0.2 rounded-full text-[10px]">12</span>
+</button>
+<button class="filter-chip inline-flex items-center gap-1.5 h-7 px-3 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium border border-outline-variant/60 shrink-0 transition-colors" type="button">
+<span class="">FALTANTES</span>
+<span class="bg-surface-container-high text-on-surface-variant px-1.5 py-0.2 rounded-full text-[10px]">5</span>
+</button>
+<button class="filter-chip inline-flex items-center gap-1.5 h-7 px-3 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium border border-outline-variant/60 shrink-0 transition-colors" type="button">
+<span class="">AGOTADOS</span>
+<span class="bg-error-container text-on-error-container font-bold px-1.5 py-0.2 rounded-full text-[10px]">2</span>
+</button>
+<button class="filter-chip inline-flex items-center gap-1.5 h-7 px-3 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium border border-outline-variant/60 shrink-0 transition-colors" type="button">
+<span class="">NO FISCAL</span>
+<span class="bg-surface-container-high text-on-surface-variant px-1.5 py-0.2 rounded-full text-[10px]">45</span>
+</button>
+<button class="filter-chip inline-flex items-center gap-1.5 h-7 px-3 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium border border-outline-variant/60 shrink-0 transition-colors" type="button">
+<span class="">SUELTO</span>
+<span class="bg-surface-container-high text-on-surface-variant px-1.5 py-0.2 rounded-full text-[10px]">10</span>
+</button>
+</div>
+<!-- Table Container (Scroll únicamente en el tbody) -->
+<div class="flex-1 overflow-y-auto overflow-x-auto min-h-0 bg-surface-container-lowest">
+<table class="w-full border-collapse text-left">
+<thead class="sticky top-0 z-10 bg-surface-container-low border-b border-outline-variant font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider select-none">
+<tr>
+<th class="py-2.5 px-4 font-semibold w-44" scope="col">CÓDIGO</th>
+<th class="py-2.5 px-4 font-semibold min-w-[220px]" scope="col">NOMBRE</th>
+<th class="py-2.5 px-4 font-semibold text-right w-28" scope="col">PRECIO</th>
+<th class="py-2.5 px-4 font-semibold text-center w-28" scope="col">STOCK</th>
+<th class="py-2.5 px-4 font-semibold text-center w-36" scope="col">ESTADO</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/40 font-body-md text-body-md" id="inventory-rows">
+<!-- Fila 1: Coca Cola 2.25L -->
+<tr class="product-row bg-surface-container-high/60 border-l-4 border-l-primary-container cursor-pointer transition-colors" data-cat="Bebidas" data-code="7791234567890" data-cost="1200" data-days="7" data-low-margin="true" data-margin="51.02" data-min="20" data-name="Coca Cola 2.25L" data-price="2450" data-stock="145">
+<td class="py-3 px-4 font-numeric-tape text-numeric-tape font-mono text-primary font-medium tracking-tight">7791234567890</td>
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">Coca Cola 2.25L</span>
+<span class="text-on-surface-variant text-label-sm font-label-sm">Gaseosa Regular Retornable / Bebidas</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right font-numeric-tape text-numeric-tape font-semibold text-on-surface">$2.450</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface font-numeric-tape text-numeric-tape font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+<span class="">145</span>
+</div>
+</td>
+<td class="py-3 px-4 text-center">
+<span class="material-symbols-outlined text-tertiary-container text-[18px] inline-block align-middle" title="Normal">check_circle</span>
+</td>
+</tr>
+<!-- Fila 2: Lays Clásicas 145g -->
+<tr class="product-row hover:bg-surface-container-low/80 cursor-pointer transition-colors border-l-4 border-l-transparent" data-cat="Snacks" data-code="7790001112223" data-cost="980" data-days="7" data-low-margin="false" data-margin="45.55" data-min="15" data-name="Lays Clásicas 145g" data-price="1800" data-stock="0">
+<td class="py-3 px-4 font-numeric-tape text-numeric-tape font-mono text-on-surface-variant">7790001112223</td>
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Lays Clásicas 145g</span>
+<span class="text-on-surface-variant text-label-sm font-label-sm">Papas Fritas Saladas / Snacks</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right font-numeric-tape text-numeric-tape font-semibold text-on-surface">$1.800</td>
+<td class="py-3 px-4 text-center">
+<span class="font-numeric-tape text-numeric-tape font-semibold text-error">0</span>
+</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-block bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded text-xs tracking-wide">[AGOT]</span>
+</td>
+</tr>
+<!-- Fila 3: Queso Rallado 130g -->
+<tr class="product-row hover:bg-surface-container-low/80 cursor-pointer transition-colors border-l-4 border-l-transparent" data-cat="Lácteos" data-code="7799998887776" data-cost="1950" data-days="7" data-low-margin="false" data-margin="39.06" data-min="10" data-name="Queso Rallado 130g" data-price="3200" data-stock="3">
+<td class="py-3 px-4 font-numeric-tape text-numeric-tape font-mono text-on-surface-variant">7799998887776</td>
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Queso Rallado 130g</span>
+<span class="text-on-surface-variant text-label-sm font-label-sm">Reggianito Estacionado / Lácteos</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right font-numeric-tape text-numeric-tape font-semibold text-on-surface">$3.200</td>
+<td class="py-3 px-4 text-center">
+<span class="font-numeric-tape text-numeric-tape font-semibold text-amber-800">3</span>
+</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-block bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-xs tracking-wide">[CRIT]</span>
+</td>
+</tr>
+<!-- Fila 4: Leche Entera 1L -->
+<tr class="product-row hover:bg-surface-container-low/80 cursor-pointer transition-colors border-l-4 border-l-transparent" data-cat="Lácteos" data-code="7791112223334" data-cost="900" data-days="5" data-low-margin="false" data-margin="40.00" data-min="20" data-name="Leche Entera 1L" data-price="1500" data-stock="50">
+<td class="py-3 px-4 font-numeric-tape text-numeric-tape font-mono text-on-surface-variant">7791112223334</td>
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Leche Entera 1L</span>
+<span class="text-on-surface-variant text-label-sm font-label-sm">Fresca Pasteurizada / Lácteos</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right font-numeric-tape text-numeric-tape font-semibold text-on-surface">$1.500</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface font-numeric-tape text-numeric-tape font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+<span class="">50</span>
+</div>
+</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-block bg-yellow-100 text-yellow-800 font-bold px-2 py-0.5 rounded text-xs tracking-wide">[VENCE 15/01]</span>
+</td>
+</tr>
+<!-- Fila 5: Yogur Frutilla 200g -->
+<tr class="product-row hover:bg-surface-container-low/80 cursor-pointer transition-colors border-l-4 border-l-transparent" data-cat="Lácteos" data-code="7795556667778" data-cost="500" data-days="3" data-low-margin="false" data-margin="37.50" data-min="15" data-name="Yogur Frutilla 200g" data-price="800" data-stock="20">
+<td class="py-3 px-4 font-numeric-tape text-numeric-tape font-mono text-on-surface-variant">7795556667778</td>
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Yogur Frutilla 200g</span>
+<span class="text-on-surface-variant text-label-sm font-label-sm">Yogur Entero / Lácteos</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right font-numeric-tape text-numeric-tape font-semibold text-on-surface">$800</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface font-numeric-tape text-numeric-tape font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+<span class="">20</span>
+</div>
+</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-block bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded text-xs tracking-wide">[VENCIDO]</span>
+</td>
+</tr>
+<!-- Fila 6: Marlboro Rojo 20u -->
+<tr class="product-row hover:bg-surface-container-low/80 cursor-pointer transition-colors border-l-4 border-l-transparent" data-cat="Cigarrillos" data-code="7793334445556" data-cost="950" data-days="10" data-low-margin="true" data-margin="20.83" data-min="30" data-name="Marlboro Rojo 20u" data-price="1200" data-stock="100">
+<td class="py-3 px-4 font-numeric-tape text-numeric-tape font-mono text-on-surface-variant">7793334445556</td>
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Marlboro Rojo 20u</span>
+<span class="text-on-surface-variant text-label-sm font-label-sm">Cigarrillos Rubios / Cigarrillos</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right font-numeric-tape text-numeric-tape font-semibold text-on-surface">$1.200</td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface font-numeric-tape text-numeric-tape font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+<span class="">100</span>
+</div>
+</td>
+<td class="py-3 px-4 text-center">
+<span class="inline-block bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded text-xs tracking-wide">[SUELTO X]</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- FOOTER / HORIZONTE INFERIOR FIJO -->
+<footer class="h-14 px-space-md bg-surface-container-lowest border-t border-outline-variant/60 flex items-center justify-between gap-space-md shrink-0 select-none">
+<div class="flex items-center gap-3">
+<span class="font-label-md text-label-md text-on-surface-variant">Mostrando <strong class="text-on-surface font-semibold">150</strong> de <strong class="text-on-surface font-semibold">1250</strong> productos</span>
+<div class="w-24 h-1.5 bg-surface-container rounded-full overflow-hidden hidden sm:block">
+<div class="w-1/8 h-full bg-primary rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<a class="h-9 px-space-md inline-flex items-center gap-1.5 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md border border-outline-variant/60 transition-colors" data-path="terminal-pos" href="#">
+<span class="text-on-surface-variant">←</span>
+<span class="hidden md:inline">VOLVER A CAJA</span>
+</a>
+<button class="h-9 px-space-sm inline-flex items-center gap-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md border border-outline-variant/60 transition-colors" title="Importar catálogo CSV" type="button">
+<span class="text-[14px]">↑</span>
+<span class="hidden xl:inline">IMPORTAR CSV</span>
+</button>
+<button class="h-9 px-space-sm inline-flex items-center gap-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md border border-outline-variant/60 transition-colors" title="Exportar catálogo CSV" type="button">
+<span class="text-[14px]">↓</span>
+<span class="hidden xl:inline">EXPORTAR CSV</span>
+</button>
+<button class="h-9 px-space-md inline-flex items-center gap-1.5 rounded bg-primary-container text-on-primary hover:bg-primary font-label-md text-label-md font-semibold transition-all shadow-sm active:scale-95" id="btn-nuevo-producto" type="button">
+<span class="text-[16px] leading-none">+</span>
+<span class="">NUEVO</span>
+</button>
+</div>
+</footer>
+</section>
+<!-- PANEL DERECHO - DETALLE DE PRODUCTO (Fijo 400px, sin scroll exterior) -->
+<aside class="w-full lg:w-[410px] xl:w-[410px] h-full flex flex-col bg-surface-container-lowest shrink-0 overflow-hidden shadow-sm">
+<!-- Header -->
+<div class="h-14 px-space-lg bg-surface-container-low border-b border-outline-variant/60 flex items-center justify-between shrink-0">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">inventory_2</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Detalle de Producto</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Ficha técnica y control de inventario</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300">
+<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+<span class="font-label-sm text-label-sm uppercase font-semibold">● EDITANDO</span>
+</div>
+</div>
+<!-- Interior Scrollable Form Body -->
+<div class="flex-1 overflow-y-auto p-space-lg flex flex-col gap-3.5">
+<form class="flex flex-col gap-3.5" id="product-inspector-form" onsubmit="event.preventDefault();">
+<!-- CÓDIGO DE BARRAS -->
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold uppercase text-on-surface-variant tracking-wider flex items-center justify-between" for="form-code">
+<span class="">CÓDIGO DE BARRAS</span>
+<span class="text-[10px] text-outline font-normal">EAN-13 / INTERNO</span>
+</label>
+<div class="flex items-center gap-1.5">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[18px]">barcode</span>
+<input class="w-full h-9 pl-9 pr-2 font-numeric-tape text-numeric-tape font-mono bg-surface-bright text-on-surface border border-outline-variant rounded focus:outline-none focus:border-primary-container" id="form-code" type="text" value="7791234567890">
+</div>
+<button class="w-9 h-9 flex items-center justify-center rounded bg-surface-container-low hover:bg-surface-container border border-outline-variant text-on-surface transition-colors shrink-0" title="Generar código automático" type="button">
+<span class="material-symbols-outlined text-[18px]">autorenew</span>
+</button>
+</div>
+</div>
+<!-- NOMBRE COMERCIAL -->
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold uppercase text-on-surface-variant tracking-wider" for="form-name">NOMBRE COMERCIAL</label>
+<input class="w-full h-9 px-3 font-body-md text-body-md bg-surface-bright text-on-surface border border-outline-variant rounded focus:outline-none focus:border-primary-container" id="form-name" type="text" value="Coca Cola 2.25L">
+</div>
+<!-- CATEGORÍA -->
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold uppercase text-on-surface-variant tracking-wider" for="form-cat">CATEGORÍA</label>
+<div class="relative">
+<select class="w-full h-9 pl-3 pr-8 font-body-md text-body-md bg-surface-bright text-on-surface border border-outline-variant rounded focus:outline-none focus:border-primary-container appearance-none cursor-pointer" id="form-cat"><option selected="" value="Bebidas">Bebidas</option><option value="Snacks">Snacks</option><option value="Lácteos">Lácteos</option><option value="Almacén">Almacén</option><option value="Cigarrillos">Cigarrillos</option></select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-outline text-[18px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- TWO-COL: COSTO ($) y MARGEN % -->
+<div class="grid grid-cols-2 gap-2.5">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold uppercase text-on-surface-variant tracking-wider" for="form-cost">COSTO ($)</label>
+<div class="relative">
+<span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-outline font-mono text-label-sm">$</span>
+<input class="w-full h-9 pl-6 pr-2 font-numeric-tape text-numeric-tape text-right bg-surface-bright text-on-surface border border-outline-variant rounded focus:outline-none focus:border-primary-container" id="form-cost" type="text" value="1.200">
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold uppercase text-on-surface-variant tracking-wider" for="form-margin">MARGEN %</label>
+<div class="relative">
+<span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-outline font-mono text-label-sm">%</span>
+<input class="w-full h-9 pl-2 pr-6 font-numeric-tape text-numeric-tape text-right bg-surface-bright text-on-surface border border-outline-variant rounded focus:outline-none focus:border-primary-container" id="form-margin" type="text" value="51,02">
+</div>
+</div>
+</div>
+<!-- P. VENTA AL PÚBLICO & GANANCIA NETA CON BADGE [MARGEN BAJO] -->
+<div class="p-space-md rounded bg-surface-container-low border border-primary-container/20 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-semibold uppercase text-on-surface-variant tracking-wide">P. VENTA AL PÚBLICO</span>
+<div class="flex items-center gap-2">
+<span class="font-numeric-display text-headline-lg font-bold text-primary" id="display-sale-price">$ 2.450</span>
+<span class="bg-amber-100 text-amber-800 text-xs px-2 py-0.5 rounded font-bold" id="badge-margen-bajo">[MARGEN BAJO]</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant/40">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Ganancia Neta:</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-tertiary-fixed/30 text-tertiary-container font-label-md text-label-md font-semibold" id="display-gain">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span class="">+$1.250 (51.02%)</span>
+</span>
+</div>
+</div>
+<!-- STOCK DISPONIBLE (Solo botones +1, +5, +10) -->
+<div class="flex flex-col gap-2 p-space-md bg-surface-bright rounded border border-outline-variant/60">
+<div class="flex items-baseline justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold uppercase text-on-surface-variant tracking-wider">STOCK DISPONIBLE</span>
+<span class="text-[11px] text-outline">En góndola / trastienda</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-numeric-display text-numeric-display font-bold text-on-surface" id="stock-display">145</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold">UNID.</span>
+</div>
+</div>
+<!-- Quick Increments: SOLO +1, +5, +10 -->
+<div class="grid grid-cols-3 gap-2 pt-1">
+<button class="btn-stock-step h-8 rounded bg-surface-container-low hover:bg-primary-container hover:text-on-primary text-on-surface font-label-sm text-label-sm font-semibold border border-outline-variant/60 transition-colors" data-step="1" type="button">+1</button>
+<button class="btn-stock-step h-8 rounded bg-surface-container-low hover:bg-primary-container hover:text-on-primary text-on-surface font-label-sm text-label-sm font-semibold border border-outline-variant/60 transition-colors" data-step="5" type="button">+5</button>
+<button class="btn-stock-step h-8 rounded bg-surface-container-low hover:bg-primary-container hover:text-on-primary text-on-surface font-label-sm text-label-sm font-semibold border border-outline-variant/60 transition-colors" data-step="10" type="button">+10</button>
+</div>
+</div>
+<!-- TWO-COL SETTINGS: STOCK MÍNIMO & AVISO DÍAS -->
+<div class="grid grid-cols-2 gap-2.5">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold uppercase text-on-surface-variant tracking-wider" for="form-min">STOCK MÍNIMO</label>
+<input class="w-full h-9 px-3 font-numeric-tape text-numeric-tape text-right bg-surface-bright text-on-surface border border-outline-variant rounded focus:outline-none focus:border-primary-container" id="form-min" type="number" value="20">
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm font-semibold uppercase text-on-surface-variant tracking-wider" for="form-days">AVISO DÍAS</label>
+<input class="w-full h-9 px-3 font-numeric-tape text-numeric-tape text-right bg-surface-bright text-on-surface border border-outline-variant rounded focus:outline-none focus:border-primary-container" id="form-days" type="number" value="7">
+</div>
+</div>
+<!-- TOGGLE: RÉGIMEN NO FISCAL (Desactivado) -->
+<div class="flex items-center justify-between p-2.5 bg-surface-container-low/60 rounded border border-outline-variant/40">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold uppercase text-on-surface">RÉGIMEN NO FISCAL</span>
+<span class="text-[11px] text-on-surface-variant">Excluir de controladores fiscales AFIP</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" id="form-non-fiscal" type="checkbox">
+<div class="w-9 h-5 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</form>
+<!-- BOTONES DE ACCIÓN PRINCIPALES -->
+<div class="flex flex-col gap-2 pt-1 border-t border-outline-variant/40">
+<button class="w-full h-10 rounded bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 shadow-sm transition-all active:scale-98" id="btn-save" type="button">
+<span class="material-symbols-outlined text-[18px]">save</span>
+<span class="">ACTUALIZAR PRODUCTO</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="h-8 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium border border-outline-variant transition-colors flex items-center justify-center gap-1" id="btn-clean" type="button">
+<span class="material-symbols-outlined text-[16px]">backspace</span>
+<span class="">LIMPIAR</span>
+</button>
+<button class="h-8 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium border border-outline-variant transition-colors flex items-center justify-center gap-1" id="btn-form-new" type="button">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+<span class="">NUEVO</span>
+</button>
+</div>
+<button class="w-full h-8 rounded text-error hover:bg-error-container/40 font-label-sm text-label-sm font-semibold tracking-wide uppercase transition-colors flex items-center justify-center gap-1.5 border border-error/20" id="btn-delete" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+<span class="">BAJA DE PRODUCTO</span>
+</button>
+</div>
+<!-- SECCIÓN COLAPSABLE 'Últimos Movimientos' -->
+<div class="border border-outline-variant/60 rounded bg-slate-50 overflow-hidden shrink-0 mt-1">
+<button class="w-full px-3 py-2.5 flex items-center justify-between bg-surface-container-low hover:bg-surface-container transition-colors text-left" id="btn-toggle-movements" type="button">
+<div class="flex items-center gap-2 font-label-md text-label-md font-semibold text-on-surface">
+<span class="">📋</span>
+<span class="">Últimos Movimientos</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-outline transition-transform duration-200" id="icon-movements-arrow">expand_less</span>
+</button>
+<div class="p-2 border-t border-outline-variant/40" id="content-movements">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="text-[10px] uppercase font-semibold text-on-surface-variant border-b border-outline-variant/40 select-none">
+<tr>
+<th class="py-1 px-1.5">FECHA</th>
+<th class="py-1 px-1.5">TIPO</th>
+<th class="py-1 px-1.5 text-center">DELTA</th>
+<th class="py-1 px-1.5 text-right">USUARIO</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 font-numeric-tape text-[12px]">
+<tr>
+<td class="py-1.5 px-1.5 text-on-surface-variant font-mono">10/01 14:32</td>
+<td class="py-1.5 px-1.5 font-medium text-on-surface capitalize">venta</td>
+<td class="py-1.5 px-1.5 text-center">
+<span class="inline-block px-1.5 py-0.2 rounded bg-rose-50 text-rose-700 font-semibold border border-rose-200 text-[11px]">-2</span>
+</td>
+<td class="py-1.5 px-1.5 text-right text-on-surface-variant font-medium">Gonzalo Yance</td>
+</tr>
+<tr>
+<td class="py-1.5 px-1.5 text-on-surface-variant font-mono">09/01 09:15</td>
+<td class="py-1.5 px-1.5 font-medium text-on-surface capitalize">ajuste</td>
+<td class="py-1.5 px-1.5 text-center">
+<span class="inline-block px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200 text-[11px]">+10</span>
+</td>
+<td class="py-1.5 px-1.5 text-right text-on-surface-variant font-medium">Admin</td>
+</tr>
+<tr>
+<td class="py-1.5 px-1.5 text-on-surface-variant font-mono">08/01 16:45</td>
+<td class="py-1.5 px-1.5 font-medium text-on-surface capitalize">venta</td>
+<td class="py-1.5 px-1.5 text-center">
+<span class="inline-block px-1.5 py-0.2 rounded bg-rose-50 text-rose-700 font-semibold border border-rose-200 text-[11px]">-1</span>
+</td>
+<td class="py-1.5 px-1.5 text-right text-on-surface-variant font-medium">Gonzalo Yance</td>
+</tr>
+<tr>
+<td class="py-1.5 px-1.5 text-on-surface-variant font-mono">07/01 11:20</td>
+<td class="py-1.5 px-1.5 font-medium text-on-surface capitalize">recepcion</td>
+<td class="py-1.5 px-1.5 text-center">
+<span class="inline-block px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200 text-[11px]">+50</span>
+</td>
+<td class="py-1.5 px-1.5 text-right text-on-surface-variant font-medium">Admin</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<script>
+  (function() {
+    const rows = document.querySelectorAll('.product-row');
+    const formCode = document.getElementById('form-code');
+    const formName = document.getElementById('form-name');
+    const formCost = document.getElementById('form-cost');
+    const formMargin = document.getElementById('form-margin');
+    const formMin = document.getElementById('form-min');
+    const formDays = document.getElementById('form-days');
+    const formCat = document.getElementById('form-cat');
+    const stockDisplay = document.getElementById('stock-display');
+    const saleDisplay = document.getElementById('display-sale-price');
+    const gainDisplay = document.getElementById('display-gain');
+    const badgeMargenBajo = document.getElementById('badge-margen-bajo');
+    const searchInput = document.getElementById('inventory-search');
+    const btnClean = document.getElementById('btn-clean');
+    const btnFormNew = document.getElementById('btn-form-new');
+    const btnNuevoProducto = document.getElementById('btn-nuevo-producto');
+    const btnSave = document.getElementById('btn-save');
+    const stockStepButtons = document.querySelectorAll('.btn-stock-step');
+    const filterChips = document.querySelectorAll('.filter-chip');
+
+    const btnToggleMovements = document.getElementById('btn-toggle-movements');
+    const contentMovements = document.getElementById('content-movements');
+    const iconMovementsArrow = document.getElementById('icon-movements-arrow');
+
+    let currentStock = 145;
+
+    // Toggle Movimientos Colapsable
+    if (btnToggleMovements && contentMovements && iconMovementsArrow) {
+      btnToggleMovements.addEventListener('click', () => {
+        const isHidden = contentMovements.classList.toggle('hidden');
+        iconMovementsArrow.textContent = isHidden ? 'expand_more' : 'expand_less';
+      });
+    }
+
+    // Row selection and inspector sync
+    rows.forEach(row => {
+      row.addEventListener('click', () => {
+        rows.forEach(r => {
+          r.classList.remove('bg-surface-container-high/60', 'border-l-primary-container');
+          r.classList.add('border-l-transparent');
+        });
+        row.classList.remove('border-l-transparent');
+        row.classList.add('bg-surface-container-high/60', 'border-l-primary-container');
+
+        const code = row.dataset.code;
+        const name = row.dataset.name;
+        const cost = parseFloat(row.dataset.cost || 0);
+        const margin = parseFloat(row.dataset.margin || 0);
+        const price = parseFloat(row.dataset.price || 0);
+        const stock = parseInt(row.dataset.stock || 0, 10);
+        const min = row.dataset.min || 10;
+        const days = row.dataset.days || 7;
+        const cat = row.dataset.cat || 'Bebidas';
+        const isLowMargin = row.dataset.lowMargin === 'true';
+
+        currentStock = stock;
+
+        if (formCode) formCode.value = code;
+        if (formName) formName.value = name;
+        if (formCost) formCost.value = cost.toLocaleString('es-AR');
+        if (formMargin) formMargin.value = margin.toLocaleString('es-AR', { minimumFractionDigits: 2 });
+        if (formMin) formMin.value = min;
+        if (formDays) formDays.value = days;
+        if (formCat) formCat.value = cat;
+        if (stockDisplay) stockDisplay.textContent = currentStock;
+
+        if (saleDisplay) {
+          saleDisplay.textContent = `$ ${price.toLocaleString('es-AR')}`;
+        }
+
+        if (badgeMargenBajo) {
+          badgeMargenBajo.style.display = isLowMargin ? 'inline-block' : 'none';
+        }
+
+        const netGain = price - cost;
+        if (gainDisplay) {
+          gainDisplay.innerHTML = `<span class="material-symbols-outlined text-[14px]">trending_up</span><span>+$${netGain.toLocaleString('es-AR')} (${margin.toFixed(2)}%)</span>`;
+        }
+      });
+    });
+
+    // Quick stock increments (+1, +5, +10)
+    stockStepButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const step = parseInt(btn.dataset.step, 10);
+        currentStock += step;
+        if (stockDisplay) stockDisplay.textContent = currentStock;
+      });
+    });
+
+    // Quick filter chips switch visual
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach(c => {
+          c.className = "filter-chip inline-flex items-center gap-1.5 h-7 px-3 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-medium border border-outline-variant/60 shrink-0 transition-colors";
+        });
+        chip.className = "filter-chip inline-flex items-center gap-1.5 h-7 px-3 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold tracking-wide shadow-sm shrink-0 transition-transform active:scale-95";
+      });
+    });
+
+    // Search filter micro-interaction
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase().trim();
+        rows.forEach(row => {
+          const text = row.innerText.toLowerCase();
+          row.style.display = text.includes(term) ? '' : 'none';
+        });
+      });
+
+      // F2 Focus hotkey
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'F2') {
+          e.preventDefault();
+          searchInput.focus();
+          searchInput.select();
+        }
+      });
+    }
+
+    // Clean form handler
+    const resetForm = () => {
+      if (formCode) formCode.value = '';
+      if (formName) formName.value = '';
+      if (formCost) formCost.value = '0';
+      if (formMargin) formMargin.value = '35,00';
+      if (formMin) formMin.value = '10';
+      if (formDays) formDays.value = '7';
+      if (saleDisplay) saleDisplay.textContent = '$ 0';
+      if (stockDisplay) stockDisplay.textContent = '0';
+      if (badgeMargenBajo) badgeMargenBajo.style.display = 'none';
+      currentStock = 0;
+      if (gainDisplay) gainDisplay.innerHTML = `<span class="material-symbols-outlined text-[14px]">horizontal_rule</span><span>$0 (0%)</span>`;
+      if (formName) formName.focus();
+    };
+
+    if (btnClean) btnClean.addEventListener('click', resetForm);
+    if (btnFormNew) btnFormNew.addEventListener('click', resetForm);
+    if (btnNuevoProducto) btnNuevoProducto.addEventListener('click', resetForm);
+
+    // Save visual feedback
+    if (btnSave) {
+      btnSave.addEventListener('click', () => {
+        const originalHtml = btnSave.innerHTML;
+        btnSave.classList.add('bg-tertiary-container');
+        btnSave.innerHTML = `<span class="material-symbols-outlined text-[18px]">done</span><span>GUARDADO</span>`;
+        setTimeout(() => {
+          btnSave.classList.remove('bg-tertiary-container');
+          btnSave.innerHTML = originalHtml;
+        }, 1200);
+      });
+    }
+  })();
+</script>
+
+
+</body></html>

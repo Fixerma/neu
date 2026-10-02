@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piloto de Validación - core.css (Réplica CAJA ABIERTA)</title>
+  <link rel="stylesheet" href="core/core.css">
+  <style>
+    /* Layout específico para esta maqueta */
+    .main-layout { display: flex; flex-direction: row; height: 100%; width: 100%; }
+    .left-col { flex: 1; display: flex; flex-direction: column; min-width: 0; background: var(--color-surface-container-lowest); }
+    .right-col { width: 320px; min-width: 320px; background: var(--color-surface-container); display: flex; flex-direction: column; box-shadow: var(--shadow-md); z-index: 10; }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-brand-icon"><span class="material-symbols-outlined">point_of_sale</span></div>
+      <span class="topbar-brand-text">NEURORA POS</span>
+    </div>
+    <nav class="topbar-tabs">
+      <a href="#" class="topbar-tab active">CAJA</a>
+      <a href="#" class="topbar-tab">INVENTARIO</a>
+      <a href="#" class="topbar-tab">COMPRAS</a>
+      <a href="#" class="topbar-tab">FINANZAS</a>
+      <a href="#" class="topbar-tab">REPORTES</a>
+      <a href="#" class="topbar-tab">CONFIG</a>
+    </nav>
+    <div class="topbar-actions">
+      <div class="badge-status open"><span class="badge-status-dot"></span>CAJA ABIERTA</div>
+      <button class="btn btn-danger" style="height: 2.25rem; padding: 0 1rem;">
+        <span class="material-symbols-outlined" style="font-size: 18px;">lock</span>
+        <span class="font-semibold">CERRAR CAJA</span>
+      </button>
+      <div style="height: 1.5rem; width: 1px; background: var(--color-outline-variant);"></div>
+      <div class="topbar-user">
+        <span class="topbar-user-name">Gonzalo Yance</span>
+        <span class="topbar-user-time">14:32:05</span>
+      </div>
+      <div class="topbar-user-avatar"><span class="material-symbols-outlined">person</span></div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main id="moduleContainer">
+    <div class="main-layout">
+      
+      <!-- COLUMNA IZQUIERDA -->
+      <div class="left-col">
+        <!-- Escáner -->
+        <div class="px-space-md py-space-sm bg-surface-container-low flex items-center gap-space-sm">
+          <div class="relative flex-1 flex items-center bg-surface-container-lowest rounded-lg shadow-sm" style="border: 1px solid var(--color-outline-variant);">
+            <div class="px-space-md flex items-center justify-center text-outline"><span class="material-symbols-outlined">barcode_scanner</span></div>
+            <input class="input" style="border: none; background: transparent; height: 2.5rem;" placeholder="Escáner / Código de barras..." value="7501068">
+            <span class="badge badge-neutral" style="margin-right: 0.5rem;">[F2]</span>
+          </div>
+          <button class="btn btn-primary" style="height: 2.5rem;">
+            <span class="material-symbols-outlined">search</span>
+            <span class="uppercase tracking-wider">BUSCAR [F2]</span>
+          </button>
+        </div>
+
+        <!-- Tabla de Ticket -->
+        <div class="flex-1 overflow-y-auto">
+          <table class="table table-fixed">
+            <thead class="sticky top-0 z-10">
+              <tr class="table-header">
+                <th class="w-28">CÓDIGO</th>
+                <th>DESCRIPCIÓN</th>
+                <th class="w-36 text-center">CANT</th>
+                <th class="w-28 text-right">P. UNIT</th>
+                <th class="w-32 text-right">SUBTOTAL</th>
+                <th class="w-14 text-center">X</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-row">
+                <td class="font-mono text-on-surface-variant">7501025</td>
+                <td class="truncate">
+                  <div class="flex items-center gap-space-xs">
+                    <span class="font-semibold text-on-surface">ACEITE VEGETAL 1L</span>
+                    <span class="badge badge-primary" style="font-size: 10px;">[RÁPIDO]</span>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div class="qty-control">
+                    <button class="qty-btn">−</button>
+                    <span class="qty-value">2</span>
+                    <button class="qty-btn">+</button>
+                  </div>
+                </td>
+                <td class="text-right font-numeric-tape text-on-surface-variant">$450</td>
+                <td class="text-right font-numeric-tape font-semibold text-on-surface">$900</td>
+                <td class="text-center"><button class="btn-icon" style="width: 2rem; height: 2rem; color: var(--color-error);"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></td>
+              </tr>
+              <tr class="table-row active">
+                <td class="font-mono text-primary font-bold">7501068</td>
+                <td class="truncate">
+                  <div class="flex items-baseline gap-space-xs">
+                    <span class="font-bold text-primary">SANGUCHITO MIGA</span>
+                    <span class="text-on-surface-variant font-body-sm">(Sándwich de Miga Jamón y Queso)</span>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div class="qty-control">
+                    <button class="qty-btn">−</button>
+                    <span class="qty-value text-primary">1</span>
+                    <button class="qty-btn">+</button>
+                  </div>
+                </td>
+                <td class="text-right font-numeric-tape text-on-surface-variant font-medium">$3.000</td>
+                <td class="text-right font-numeric-tape font-bold text-primary">$3.000</td>
+                <td class="text-center"><button class="btn-icon" style="width: 2rem; height: 2rem; color: var(--color-error);"><span class="material-symbols-outlined" style="font-size: 18px;">delete</span></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Footer de Tabla -->
+        <div class="table-footer">
+          <div class="table-footer-row">
+            <div class="flex items-center gap-space-sm">
+              <span class="flex items-center gap-1 text-on-surface font-semibold"><span class="material-symbols-outlined text-primary" style="font-size: 16px;">shopping_bag</span>2 artículos (3 unidades en total)</span>
+              <span class="text-outline">•</span>
+              <span class="">Lista General</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span>
+              <span class="font-label-sm text-tertiary-fixed-dim font-bold tracking-wider">SISTEMA ONLINE</span>
+            </div>
+          </div>
+          <div class="table-footer-shortcuts">
+            <span><kbd>[F1]</kbd> Ayuda</span>
+            <span><kbd>[F2]</kbd> Buscar</span>
+            <span><kbd>[F4]</kbd> Cobrar</span>
+            <span><kbd>[F8]</kbd> Suelto</span>
+            <span><kbd>[ESC]</kbd> Cancelar</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUMNA DERECHA -->
+      <div class="right-col">
+        <!-- Venta Rápida Header -->
+        <div class="p-space-sm bg-surface-container-high flex items-center justify-between shadow-sm">
+          <div class="flex items-center gap-space-xs">
+            <span class="material-symbols-outlined text-primary" style="font-size: 18px;">bolt</span>
+            <span class="font-headline-sm uppercase tracking-wider text-on-surface">VENTA RÁPIDA</span>
+          </div>
+          <span class="badge badge-primary">4 DIRECTOS</span>
+        </div>
+
+        <!-- Grid Venta Rápida -->
+        <div class="p-space-sm grid-2x2">
+          <button class="quick-btn">
+            <div class="flex items-center justify-between w-full"><span style="font-size: 1.5rem;"></span><span class="font-label-sm text-outline font-mono">150g</span></div>
+            <div><div class="font-headline-sm text-on-surface uppercase leading-tight">MANI</div><div class="font-numeric-tape font-bold text-primary leading-none mt-0.5">$1,000</div></div>
+          </button>
+          <button class="quick-btn">
+            <div class="flex items-center justify-between w-full"><span style="font-size: 1.5rem;"></span><span class="font-label-sm text-outline font-mono">120g</span></div>
+            <div><div class="font-headline-sm text-on-surface uppercase leading-tight">PALITO</div><div class="font-numeric-tape font-bold text-primary leading-none mt-0.5">$1,000</div></div>
+          </button>
+          <button class="quick-btn">
+            <div class="flex items-center justify-between w-full"><span style="font-size: 1.5rem;">🥪</span><span class="font-label-sm text-outline font-mono">J&Q</span></div>
+            <div><div class="font-headline-sm text-on-surface uppercase leading-tight">MIGA</div><div class="font-numeric-tape font-bold text-primary leading-none mt-0.5">$3,000</div></div>
+          </button>
+          <button class="quick-btn">
+            <div class="flex items-center justify-between w-full"><span style="font-size: 1.5rem;"></span><span class="font-label-sm text-outline font-mono">x10</span></div>
+            <div><div class="font-headline-sm text-on-surface uppercase leading-tight">CARAMELOS</div><div class="font-numeric-tape font-bold text-primary leading-none mt-0.5">$1,000</div></div>
+          </button>
+        </div>
+
+        <!-- Botón Suelto -->
+        <div class="px-space-sm pb-space-xs">
+          <button class="suelto-btn">
+            <div class="flex items-center gap-space-sm">
+              <div class="suelto-btn-icon"><span class="material-symbols-outlined" style="font-size: 20px;">scale</span></div>
+              <div class="text-left"><div class="font-headline-sm tracking-wide leading-tight">⚡ SUELTO</div><div class="font-label-sm text-[10px] text-on-secondary-fixed-variant leading-tight">Cigarrillos fraccionados</div></div>
+            </div>
+            <span class="badge badge-primary">[F8]</span>
+          </button>
+        </div>
+
+        <!-- Panel de Cobro (Checkout) -->
+        <div class="checkout-panel">
+          <div class="flex justify-between items-center text-on-surface-variant font-body-sm">
+            <span>Subtotal (2 ítems / 3 u.)</span>
+            <span class="font-numeric-tape font-medium text-on-surface">$3.900</span>
+          </div>
+          <div class="checkout-total-display">
+            <div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm uppercase tracking-widest font-semibold">
+              <span>TOTAL</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+              <span class="text-primary font-bold lowercase tracking-normal">venta en curso</span>
+            </div>
+            <div class="font-numeric-display text-primary tracking-tight mt-0.5">$3.900</div>
+          </div>
+          <button class="checkout-cobrar-btn">
+            <div class="flex items-center gap-space-xs uppercase tracking-wider"><span class="material-symbols-outlined" style="font-size: 24px;">payments</span>COBRAR [F4]</div>
+            <span class="font-label-sm text-[10px] text-on-primary-container tracking-wider font-medium uppercase">Confirmar venta</span>
+          </button>
+          <div class="grid grid-2x2">
+            <button class="btn btn-secondary" style="height: 2.5rem;"><span class="material-symbols-outlined" style="font-size: 18px;">print</span>REIMPRIMIR</button>
+            <button class="btn btn-secondary" style="height: 2.5rem;"><span class="material-symbols-outlined" style="font-size: 18px;">inventory_2</span>PAQUETE</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</body>
+</html>

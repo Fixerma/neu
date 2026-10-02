@@ -1,0 +1,643 @@
+/* ============================================
+   NEURORA POS - CONFIG (ANEXO D)
+   Namespace: .config-*
+   ============================================ */
+
+/* Layout Principal */
+.config-layout {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.config-sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: var(--color-surface-container-lowest);
+  border-right: 1px solid var(--color-outline-variant);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.config-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: var(--color-background);
+}
+
+/* Sidebar */
+.config-sidebar-header {
+  padding: var(--space-lg);
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.config-sidebar-title {
+  font-family: var(--font-headline);
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-on-surface);
+  margin-bottom: var(--space-xs);
+}
+
+.config-sidebar-subtitle {
+  font-size: 11px;
+  color: var(--color-on-surface-variant);
+}
+
+.config-sidebar-section {
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.config-sidebar-section-title {
+  padding: var(--space-sm) var(--space-lg);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-on-surface-variant);
+}
+
+.config-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 14px;
+  color: var(--color-on-surface-variant);
+}
+
+.config-sidebar-item:hover {
+  background: var(--color-surface-container-low);
+  color: var(--color-on-surface);
+}
+
+.config-sidebar-item.active {
+  background: var(--color-surface-container-high);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.config-sidebar-item .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.config-sidebar-item.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.config-sidebar-item.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Panel Principal */
+.config-panel {
+  padding: var(--space-lg);
+}
+
+.config-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.config-panel-title {
+  font-family: var(--font-headline);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.config-panel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.config-panel-badge.success {
+  background: var(--color-tertiary-container);
+  color: var(--color-on-tertiary);
+}
+
+/* Formularios */
+.config-form {
+  max-width: 600px;
+}
+
+.config-form-group {
+  margin-bottom: var(--space-md);
+}
+
+.config-form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-on-surface-variant);
+  margin-bottom: var(--space-xs);
+}
+
+.config-form-label .required {
+  color: var(--color-error);
+}
+
+.config-form-input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-container-low);
+  color: var(--color-on-surface);
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.config-form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.config-form-select {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-container-low);
+  color: var(--color-on-surface);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.config-form-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+}
+
+.config-form-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Toggle Switch */
+.config-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.config-toggle-switch {
+  position: relative;
+  width: 48px;
+  height: 24px;
+  background: var(--color-surface-container);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.config-toggle-switch.active {
+  background: var(--color-primary-container);
+}
+
+.config-toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: var(--radius-full);
+  transition: transform 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.config-toggle-switch.active::after {
+  transform: translateX(24px);
+}
+
+.config-toggle-label {
+  font-size: 14px;
+  color: var(--color-on-surface);
+}
+
+/* Tablas */
+.config-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface-container-lowest);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.config-table th {
+  background: var(--color-surface-container-high);
+  color: var(--color-on-surface-variant);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.config-table td {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--color-outline-variant);
+  font-size: 14px;
+  color: var(--color-on-surface);
+}
+
+.config-table tr:hover {
+  background: var(--color-surface-container-low);
+}
+
+/* Botones de Acción en Tabla */
+.config-table-actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.config-table-btn {
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.config-table-btn.edit {
+  background: var(--color-surface-container);
+  color: var(--color-on-surface);
+}
+
+.config-table-btn.edit:hover {
+  background: var(--color-surface-container-high);
+}
+
+.config-table-btn.delete {
+  background: var(--color-error-container);
+  color: var(--color-error);
+}
+
+.config-table-btn.delete:hover {
+  background: var(--color-error);
+  color: var(--color-on-error);
+}
+
+/* Badges */
+.config-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-md);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.config-badge-excluded {
+  background: var(--color-secondary-container);
+  color: var(--color-on-secondary-container);
+}
+
+.config-badge-fixed {
+  background: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+}
+
+/* Denominaciones (Tags) */
+.config-denominations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.config-denomination-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-surface-container);
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.config-denomination-tag .remove {
+  cursor: pointer;
+  color: var(--color-error);
+  font-weight: 700;
+}
+
+/* Preview de Ticket */
+.config-ticket-preview {
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  font-family: monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+  margin-top: var(--space-md);
+}
+
+/* Filtros de Auditoría */
+.config-audit-filters {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.config-audit-filters .config-form-group {
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 150px;
+}
+
+/* Banner de Backup */
+.config-backup-banner {
+  background: var(--color-error-container);
+  color: var(--color-error);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+/* Días de la Semana (Checkboxes) */
+.config-days-grid {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.config-day-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-surface-container);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.config-day-checkbox input[type="checkbox"] {
+  margin: 0;
+}
+
+.config-day-checkbox:has(input:checked) {
+  background: var(--color-primary-fixed);
+  color: var(--color-primary);
+}
+
+/* Formas de Pago */
+.config-payment-methods {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.config-payment-method {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  background: var(--color-surface-container);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.config-payment-method:has(input:checked) {
+  background: var(--color-primary-fixed);
+  color: var(--color-primary);
+}
+
+/* Info Box */
+.config-info-box {
+  background: var(--color-surface-container-low);
+  border-left: 3px solid var(--color-primary);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  margin: var(--space-md) 0;
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+}
+
+/* Footer de Panel */
+.config-panel-footer {
+  padding: var(--space-lg);
+  border-top: 1px solid var(--color-outline-variant);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-surface-container-lowest);
+}
+
+/* ============================================
+   MODALES (namespace propio .config-modal-*,
+   no depende de .modal-* de core.css)
+   ============================================ */
+.config-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(11, 28, 48, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-lg);
+}
+
+.config-modal {
+  background: var(--color-surface-container-lowest);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 560px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.config-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg);
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.config-modal-title {
+  font-family: var(--font-headline);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.config-modal-close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-on-surface-variant);
+  font-weight: 700;
+  transition: background 0.2s;
+}
+.config-modal-close:hover { background: var(--color-surface-container); }
+
+.config-modal-body {
+  padding: var(--space-lg);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.config-modal-footer {
+  padding: var(--space-md) var(--space-lg);
+  border-top: 1px solid var(--color-outline-variant);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  background: var(--color-surface-container-lowest);
+}
+
+.config-modal-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.config-modal-error {
+  color: var(--color-error);
+  font-size: 12px;
+  margin-top: var(--space-xs);
+  min-height: 14px;
+}
+
+/* Lista seleccionable dentro de modales (productos, marcas, etc.) */
+.config-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.config-modal-list-item {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-container-low);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.config-modal-list-item:hover { background: var(--color-surface-container-high); }
+
+.config-modal-list-empty {
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--color-on-surface-variant);
+  font-size: 13px;
+}
+
+/* Toggle inline usado dentro de tablas (habilitar suelto, etc.) */
+.config-inline-toggle {
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.config-inline-toggle:hover { opacity: 0.7; }
+
+.config-price-input-sm {
+  width: 6.5rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-container-low);
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+.config-price-input-sm:focus { outline: none; border-color: var(--color-primary); }
+
+/* Banner de backup persistente (Periféricos) */
+.config-backup-banner {
+  background: var(--color-error-container);
+  color: var(--color-error);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+  gap: var(--space-md);
+}
+
+.config-backup-banner-text {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Modal de escucha de lector (Probar Lectura) */
+.config-scan-listener {
+  background: var(--color-surface-container-low);
+  border: 1px dashed var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--color-on-surface-variant);
+}
+
+.config-scan-listener.captured {
+  color: var(--color-primary);
+  border-style: solid;
+  border-color: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .config-sidebar {
+    display: none;
+  }
+  .config-modal-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}

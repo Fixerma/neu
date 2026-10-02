@@ -1,0 +1,211 @@
+/* ============================================
+NEURORA POS - compras.css
+Namespace: .compras-*
+============================================ */
+.compras-layout {
+    display: flex;
+    height: 100%;
+    background: var(--color-background);
+}
+
+.compras-sidebar {
+    width: 240px;
+    background: var(--color-surface-container-lowest);
+    border-right: 1px solid var(--color-outline-variant);
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-lg) 0;
+}
+
+.compras-sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-lg);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-on-surface-variant);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.compras-sidebar-item:hover {
+    background: var(--color-surface-container-low);
+    color: var(--color-on-surface);
+}
+
+.compras-sidebar-item.active {
+    background: var(--color-surface-container);
+    color: var(--color-primary);
+    font-weight: 600;
+    border-left-color: var(--color-primary);
+}
+
+.compras-sidebar-item .material-symbols-outlined {
+    font-size: 20px;
+}
+
+.compras-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.compras-header {
+    padding: var(--space-lg) var(--space-xl);
+    border-bottom: 1px solid var(--color-outline-variant);
+    background: var(--color-surface-container-lowest);
+}
+
+.compras-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+}
+
+.compras-header p {
+    font-size: 13px;
+    color: var(--color-on-surface-variant);
+}
+
+.compras-content {
+    flex: 1;
+    padding: var(--space-xl);
+    overflow-y: auto;
+}
+
+.compras-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+}
+
+.compras-table-container {
+    background: var(--color-surface-container-lowest);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-outline-variant);
+    overflow: hidden;
+}
+
+.compras-empty-state {
+    text-align: center;
+    padding: var(--space-xl);
+    color: var(--color-on-surface-variant);
+}
+
+.compras-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-md);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.compras-badge-pendiente { background: var(--color-secondary-container); color: var(--color-on-secondary-container); }
+.compras-badge-recibido { background: var(--color-tertiary-container); color: var(--color-on-tertiary); }
+.compras-badge-a { background: var(--color-primary-fixed); color: var(--color-primary); }
+.compras-badge-b { background: var(--color-secondary-container); color: var(--color-on-secondary-container); }
+.compras-badge-x { background: var(--color-surface-container); color: var(--color-on-surface-variant); }
+
+.compras-modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+.compras-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--space-md);
+}
+
+.compras-items-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-on-surface-variant);
+    padding: var(--space-sm);
+    border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.compras-items-table td {
+    padding: var(--space-sm);
+    border-bottom: 1px solid var(--color-outline-variant);
+    font-size: 13px;
+}
+
+.compras-items-table input {
+    width: 100%;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--color-outline-variant);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+}
+
+.compras-footer-info {
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    background: var(--color-surface-container-low);
+    border-radius: var(--radius-lg);
+    font-size: 12px;
+    color: var(--color-on-surface-variant);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+}
+
+/* Modales propios de COMPRAS (core.css no define .modal-*) */
+.compras-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 28, 48, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: var(--space-lg);
+}
+
+.compras-modal-content {
+    background: var(--color-surface-container-lowest);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    width: 100%;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.compras-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.compras-modal-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.compras-modal-body {
+    padding: var(--space-lg);
+    overflow-y: auto;
+    flex: 1;
+}
+
+.compras-modal-footer {
+    padding: var(--space-md) var(--space-lg);
+    border-top: 1px solid var(--color-outline-variant);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+}

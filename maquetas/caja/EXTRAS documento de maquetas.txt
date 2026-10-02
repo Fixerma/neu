@@ -1,0 +1,249 @@
+# 📋 DOCUMENTO RESUMEN: Elementos "Extra" en Maquetas vs Anexos Oficiales
+
+**Propósito:** Este documento lista todos los elementos visuales, textos y funcionalidades que aparecieron en las maquetas generadas por Stitch pero que **NO están especificados en los anexos oficiales**. Sirve como referencia para que la IA que implemente el código se ciña estrictamente a los anexos.
+
+---
+
+## 🟦 1. CAJA (ANEXO A)
+
+### Elementos NO especificados:
+
+| # | Elemento en maqueta | Ubicación | Observación |
+|---|---|---|---|
+| 1 | "TASA DESPACHO 18.4 tx/h" con gráfico de línea | Panel derecho, sobre el total | El anexo no menciona métricas de velocidad de despacho |
+| 2 | "CONSUMIDOR FINAL" badge | Panel derecho, arriba de Venta Rápida | El anexo no especifica selector de tipo de cliente |
+| 3 | "Subtotal (5 ítems / 7 u.)" | Footer del panel derecho | El anexo no especifica desglose de ítems/unidades |
+| 4 | "IVA (21% incluido) $1,258.26" | Footer del panel derecho | El anexo no menciona desglose de IVA (está APARCADO en CONFIG) |
+| 5 | "AFIP RG 1415: ONLINE" | Footer inferior | No está en el anexo |
+| 6 | "HASH: BF2A-D9B1-P0S01" | Footer inferior | No está en el anexo |
+| 7 | "V12.4.9 ARCH" | Footer inferior | No está en el anexo |
+| 8 | Iconos decorativos en botones de Venta Rápida (🥜, , 🥪, 🍬) | Panel derecho | El anexo solo menciona "botones rápidos", no iconos |
+| 9 | "BLOQUEO OPERATIVO: CAJA CERRADA" banner rojo | Footer inferior | No está explícito en el anexo (aunque es coherente con el estado) |
+| 10 | "TRANSACCIONES DETENIDAS" | Footer inferior | No está en el anexo |
+| 11 | Atajos [F1] Ayuda, [F2] Buscar, [F4] Cobrar, [F8] Suelto, [ESC] Cancelar | Footer inferior | El anexo menciona F4 y ESC, pero no F1, F2, F8 |
+| 12 | "0 artículos" sobre el total | Panel derecho | No está explícito en el anexo |
+
+---
+
+## 🟩 2. INVENTARIO (ANEXO B)
+
+### Elementos NO especificados:
+
+| # | Elemento en maqueta | Ubicación | Observación |
+|---|---|---|---|
+| 1 | Subtítulo descriptivo en cada fila (ej: "Gaseosa Regular Retornable / Bebidas") | Columna NOMBRE | El anexo no menciona subtítulos descriptivos |
+| 2 | Badge "EAN-13 / INTERNO" junto al código de barras | Panel DETALLE, header | No está en el anexo |
+| 3 | Badge "EDITANDO" en panel DETALLE | Header del panel | No está en el anexo |
+| 4 | Texto "En góndola / trastienda" bajo STOCK DISPONIBLE | Panel DETALLE | No está en el anexo |
+| 5 | Texto "Excluir de controldores fiscales AFIP" bajo RÉGIMEN NO FISCAL | Panel DETALLE | No está en el anexo |
+| 6 | "Ficha técnica y control de inventario" como subtítulo del panel DETALLE | Header del panel | No está en el anexo |
+| 7 | "ESCÁNER LISTO" badge | Barra de búsqueda | No está en el anexo |
+| 8 | Atajos [F2] en barra de búsqueda | Barra de búsqueda | No está en el anexo |
+
+---
+
+## 🟨 3. CONFIG (ANEXO D)
+
+### Elementos NO especificados:
+
+| # | Elemento en maqueta | Ubicación | Observación |
+|---|---|---|---|
+| 1 | "NEURORA POS ENTERPRISE EDITION" | Sidebar, header | No está en el anexo |
+| 2 | "COBERTURA DE PAGOS 80%" con barra de progreso | Sidebar, footer | No está en el anexo |
+| 3 | "SINCRONIZACIÓN En línea v12.4.9" | Sidebar, footer | No está en el anexo |
+| 4 | "Licencia Enterprise v4.2" | Sidebar, footer | No está en el anexo |
+| 5 | Badge "MODO SUELTO HABILITADO ACTIVO" (verde, grande) | Panel principal, header | No está en el anexo |
+| 6 | Badge "SISTEMA" en sección de política | Panel principal | No está en el anexo |
+| 7 | SKU en cada marca (ej: "SKU: 77912345") | Tabla de marcas | No está en el anexo |
+| 8 | Descripción "Fracción por unidad" / "Deshabilitado temporal" | Tabla de marcas | No está en el anexo |
+| 9 | Botón "Editar" en tabla de marcas | Columna ACCIONES | El anexo solo especifica "X" (eliminar) |
+| 10 | "Cambios sin guardar: 0" + botón "GUARDAR CAMBIOS" | Footer | El anexo dice "guardado instantáneo", no botón de guardar |
+| 11 | "CONFIGURACIÓN GENERAL · OPERACIÓN DE CAJA" breadcrumb | Header del panel | No está en el anexo |
+| 12 | "GESTIÓN DE ABASTECIMIENTO" / "Control comercial & provisión" | Sidebar header | No está en el anexo |
+| 13 | "PLAZO MEDIO 4.2 Días Crédito" | Sidebar, footer | No está en el anexo |
+| 14 | "AFIP RG 1415 ONLINE" / "v12.4.9 ARCH ↑1 SYNC" | Sidebar, footer | No está en el anexo |
+
+---
+
+## 🟧 4. FINANZAS (ANEXO E)
+
+### Elementos NO especificados:
+
+| # | Elemento en maqueta | Ubicación | Observación |
+|---|---|---|---|
+| 1 | "NEURORA POS ENTERPRISE EDITION" | Sidebar, header | No está en el anexo |
+| 2 | "COBERTURA DE PAGOS 80%" con barra de progreso | Sidebar, footer | No está en el anexo |
+| 3 | "SINCRONIZACIÓN En línea v12.4.9" | Sidebar, footer | No está en el anexo |
+| 4 | "Módulo de Tesorería Habilitado" | Footer del panel | No está en el anexo |
+| 5 | "Pagos automáticos deshabilitados de caja matriz" | Footer del panel | No está en el anexo |
+| 6 | "Atajos rápidos: [F5] Actualizar, [F9] Registrar Gasto, [ESC] Volver" | Footer del panel | No está en el anexo |
+| 7 | Badges "En 2 días" / "En 3 días" en tabla de reservas | Columna VENCIMIENTO | No está en el anexo |
+| 8 | Iconos (📦, 🏠) en filas de reservas | Columna NOMBRE | No está en el anexo |
+| 9 | Subtítulos en filas (ej: "Orden compra #OC-9921 · Bebidas & Lácteos") | Columna NOMBRE | No está en el anexo |
+| 10 | Badge "URGENTES" en Próximos Vencimientos | KPI card | No está en el anexo |
+| 11 | "2 obligaciones registradas" en footer | Footer del panel | No está en el anexo |
+| 12 | "↑ +4.2% vs. día anterior" en KPI Efectivo Total | KPI card | No está en el anexo |
+| 13 | "2 compromisos bloqueados" en KPI Efectivo Reservado | KPI card | No está en el anexo |
+| 14 | "64.1% liquidez inmediata" en KPI Efectivo Disponible | KPI card | No está en el anexo |
+
+---
+
+## 🟥 5. COMPRAS (ANEXO G)
+
+### Elementos NO especificados:
+
+| # | Elemento en maqueta | Ubicación | Observación |
+|---|---|---|---|
+| 1 | "GESTIÓN DE ABASTECIMIENTO" / "Control comercial & provisión" | Sidebar header | No está en el anexo |
+| 2 | "PLAZO MEDIO 4.2 Días Crédito" con ícono | Sidebar, footer | No está en el anexo |
+| 3 | "AFIP RG 1415 ONLINE" / "v12.4.9 ARCH ↑1 SYNC" | Sidebar, footer | No está en el anexo |
+| 4 | "Módulo Compras Activo · Moneda: ARS ($)" | Footer del panel | No está en el anexo |
+| 5 | "TOTAL FACTURADO MES: $ 4.890.120" | Footer del panel | No está en el anexo |
+| 6 | Paginación "< 1/1 >" | Footer de tabla | No está en el anexo |
+| 7 | Botón "Exportar Lista" | Header del panel | No está en el anexo |
+| 8 | Filtros chips: TODOS, CON CRÉDITO, CONTADO, FACTURA A/B | Barra de filtros | No está en el anexo |
+| 9 | CUIT visible en cada fila de proveedores | Columna NOMBRE | No está en el anexo |
+| 10 | Email visible en cada fila de proveedores | Columna CONTACTO | No está en el anexo |
+| 11 | Atajos [F2], [F5], [ESC] en footer | Footer del panel | No está en el anexo |
+| 12 | Badge "3 Activos" junto al título | Header del panel | No está en el anexo |
+| 13 | "ORDEN DE COMPRA PROVISORIA #OC-004" | Header del formulario | No está en el anexo |
+| 14 | Breadcrumb "COMPRAS > GESTIÓN COMERCIAL > PEDIDOS DE COMPRA" | Header del panel | No está en el anexo |
+| 15 | Badge "3 Registrados" | Header del panel | No está en el anexo |
+| 16 | "Órdenes recientes emitidas a proveedores" | Header de tabla | No está en el anexo |
+| 17 | "Total Facturado Registrado: $266.700" | Header del panel | No está en el anexo |
+| 18 | Badge "3 PROCESADAS" | Header del panel | No está en el anexo |
+| 19 | "Cargar Factura - Registrar nuevo comprobante de compra e impacto en inventario" | Modal header | No está en el anexo |
+| 20 | "Heredado automáticamente del proveedor seleccionado (editable)" | Modal formulario | No está en el anexo |
+| 21 | "ARTÍCULOS INCLUIDOS EN LA FACTURA - 3 PRODUCTOS" | Modal tabla header | No está en el anexo |
+
+---
+
+## 🟪 6. REPORTES (ANEXO F)
+
+### Elementos NO especificados:
+
+| # | Elemento en maqueta | Ubicación | Observación |
+|---|---|---|---|
+| 1 | "INFORMES" / "Análisis de rentabilidad" | Sidebar header | No está en el anexo |
+| 2 | "GASTOS & PROV." como 4ta sección en sidebar | Sidebar | El anexo solo especifica 3 secciones |
+| 3 | "MARGEN PROMEDIO 23.3%" | Sidebar, footer | No está en el anexo |
+| 4 | "Último Cierre Fiscal 31/12/2024" | Sidebar, footer | No está en el anexo |
+| 5 | "DATOS SINCRONIZADOS" | Sidebar, footer | No está en el anexo |
+| 6 | Botones "Exportar PDF / Excel" y "Imprimir Resumen" | Header del panel | Están APARCADOS en el anexo §10 |
+| 7 | "↑ +12.4%" en Ventas Totales | KPI card | No está en el anexo |
+| 8 | "↑62.2%" en CMV | KPI card | No está en el anexo |
+| 9 | "Meta (+3.3%)" en Ganancia Neta | KPI card | No está en el anexo |
+| 10 | "100% Ingresos" bajo Ventas Totales | KPI card | No está en el anexo |
+| 11 | "62.2% s/Ventas" bajo CMV | KPI card | No está en el anexo |
+| 12 | "37.8% Margen Bruto" bajo Margen Bruto | KPI card | No está en el anexo |
+| 13 | "14.4% s/Ventas" bajo Gastos Operativos | KPI card | No está en el anexo |
+| 14 | "23.3% RENTABILIDAD" bajo Ganancia Neta | KPI card | No está en el anexo |
+| 15 | Subtítulos descriptivos bajo cada KPI (ej: "Facturación bruta registrada") | KPI cards | No están en el anexo |
+| 16 | "Período activo: 01/01/2025 - 31/01/2025" | Header del panel | No está en el anexo |
+| 17 | Atajos [F5], [F7], [F], [ESC] en footer | Footer del panel | No está en el anexo |
+| 18 | "Sistema Contable Auditado · V12.4.9 ARCH" | Footer del panel | No está en el anexo |
+| 19 | "Comparativa histórica de Ventas vs. Ganancia Neta Operativa" | Subtítulo del gráfico | No está en el anexo |
+| 20 | "Zero Scroll" | Footer del panel | No está en el anexo |
+| 21 | "Moneda: ARS ($)" | Footer del panel | No está en el anexo |
+
+---
+
+##  7. AUTOMATIZACIÓN (ANEXO H)
+
+### Elementos NO especificados:
+
+| # | Elemento en maqueta | Ubicación | Observación |
+|---|---|---|---|
+| 1 | "Sistema Inteligente de Punto de Venta" | Subtítulo del brand | No está en el anexo |
+| 2 | "V12.4" badge en brand | Brand | No está en el anexo |
+| 3 | "12 Directos" en Venta Rápida | Panel derecho | No está en el anexo |
+| 4 | Link "Marcar todas" en header del dropdown | Dropdown header | No está en el anexo |
+| 5 | "Actualizado hace 1 min" en footer del dropdown | Dropdown footer | No está en el anexo |
+| 6 | "Ver historial en auditoría" en footer del dropdown | Dropdown footer | No está en el anexo |
+| 7 | Subtotal, IVA, TOTAL A PAGAR visibles en fondo | Panel de CAJA | Son de CAJA, no de AUTOMATIZACIÓN |
+| 8 | Atajos [F1], [F2], [F4], [ESC] en footer | Footer | No están en el anexo |
+| 9 | "AFIP RG 1415: ONLINE" en footer | Footer | No está en el anexo |
+
+---
+
+## 📊 RESUMEN GENERAL: Patrones Recurrentes
+
+Estos elementos aparecen en **múltiples maquetas** y **NINGUNO está en los anexos**:
+
+### ️ Branding y Marketing
+1. "NEURORA POS ENTERPRISE EDITION"
+2. "Licencia Enterprise v4.2"
+3. "V12.4" / "V12.4.9 ARCH"
+4. "Sistema Inteligente de Punto de Venta"
+5. "Sistema Contable Auditado"
+
+###  KPIs y Métricas No Solicitadas
+6. "COBERTURA DE PAGOS 80%" con barra de progreso
+7. "PLAZO MEDIO 4.2 Días Crédito"
+8. "MARGEN PROMEDIO 23.3%"
+9. "TASA DESPACHO 18.4 tx/h"
+10. "Total Facturado Registrado/Mes"
+11. Porcentajes bajo KPIs ("100% Ingresos", "62.2% s/Ventas", etc.)
+12. Badges de variación ("↑ +12.4%", "↑62.2%")
+13. "Meta (+3.3%)"
+
+### 🔧 Información Técnica No Solicitada
+14. "SINCRONIZACIÓN En línea v12.4.9"
+15. "DATOS SINCRONIZADOS"
+16. "AFIP RG 1415 ONLINE"
+17. "HASH: BF2A-D9B1-P0S01"
+18. "Zero Scroll"
+19. "Moneda: ARS ($)"
+
+### ⌨️ Atajos de Teclado No Especificados
+20. [F1] Ayuda
+21. [F2] Buscar (en múltiples módulos)
+22. [F5] Actualizar
+23. [F7] Rango
+24. [F8] Suelto
+25. [F9] Registrar Gasto
+
+### 🎨 Elementos Visuales Decorativos
+26. Iconos en botones de Venta Rápida (🥜, 🥖, 🥪, 🍬)
+27. Iconos en filas de tablas (, 🏠)
+28. Badges de días ("En 2 días", "En 3 días")
+29. Subtítulos descriptivos bajo títulos principales
+30. Breadcrumbs ("COMPRAS > GESTIÓN COMERCIAL > ...")
+31. Badges de conteo ("3 Activos", "3 Registrados", "3 PROCESADAS")
+
+###  Textos Legales/Fiscales No Solicitados
+32. "Excluir de controldores fiscales AFIP"
+33. "Heredado automáticamente del proveedor seleccionado"
+34. "A/B = 70% costo real · X = 50% costo real" (aunque la regla SÍ está en el anexo, el texto visible no)
+
+---
+
+## 🎯 RECOMENDACIÓN FINAL PARA LA IA
+
+Cuando pases los anexos a la IA para el desarrollo, **incluí este documento** y pedile explícitamente:
+
+> **"Implementar SOLO lo especificado en los anexos A-H. Ignorar todos los elementos listados en el 'Documento Resumen de Elementos Extra'. Los anexos son la fuente única de verdad. Cualquier elemento visual, texto o funcionalidad no mencionado explícitamente en los anexos NO debe implementarse."**
+
+---
+
+## ✅ CHECKLIST DE VALIDACIÓN
+
+Al revisar el código implementado, verificar que:
+
+- [ ] No aparece "ENTERPRISE EDITION" ni "Licencia Enterprise"
+- [ ] No aparecen badges de versión ("V12.4", "V12.4.9")
+- [ ] No aparecen KPIs no especificados (Cobertura de Pagos, Plaza Medio, Margen Promedio, Tasa Despacho)
+- [ ] No aparecen porcentajes bajo los KPIs principales
+- [ ] No aparecen atajos de teclado no especificados en el anexo correspondiente
+- [ ] No aparecen subtítulos descriptivos bajo títulos principales
+- [ ] No aparecen breadcrumbs
+- [ ] No aparecen badges de conteo ("3 Activos", "3 Registrados")
+- [ ] No aparecen textos legales/AFIP no especificados
+- [ ] No aparecen botones de exportación (PDF/Excel) donde están APARCADOS
+- [ ] Solo se implementan las secciones de sidebar especificadas en cada anexo
+
+---
+
+**Documento generado el 10/09/2026**  
+**Versión: 1.0**  
+**Basado en: Anexos A, B, C, D, E, F, G, H de NEURORA POS**
