@@ -15,7 +15,7 @@
 </head>
 <body>
   <div id="moduleContainer"></div>
-  
+
   <script src="core/nucleo.js"></script>
   <script src="modules/caja/caja.js"></script>
   <script src="modules/inventario/inventario.js"></script>
@@ -29,74 +29,47 @@
     (function () {
       'use strict';
 
+      // Puente entre el NÚCLEO y cada módulo. Reenvía los hooks que el módulo defina:
+      //   boot (una sola vez), init, onShow, onHide, onEscape(e), onKey(e).
+      // Los hooks onEscape/onKey/onHide/boot SOLO se registran si el módulo los tiene,
+      // porque el NÚCLEO trata distinto a los módulos que declaran onEscape.
+      // soloAdmin:true oculta la solapa y bloquea el acceso a usuarios con rol Cajero.
+      function registrar(id, def, getModulo) {
+        const puente = {
+          name: def.name,
+          icon: def.icon,
+          soloAdmin: !!def.soloAdmin,
+          init: function () { const m = getModulo(); if (m && m.init) m.init(); },
+          onShow: function () { const m = getModulo(); if (m && m.onShow) m.onShow(); }
+        };
+        const real = getModulo();
+        if (real) {
+          ['boot', 'onHide', 'onEscape', 'onKey'].forEach(function (hook) {
+            if (typeof real[hook] === 'function') {
+              puente[hook] = function (e) { return getModulo()[hook](e); };
+            }
+          });
+        }
+        NUCLEO.registerModule(id, puente);
+      }
+
       document.addEventListener('DOMContentLoaded', function () {
-        
         if (typeof NUCLEO === 'undefined') {
           document.body.innerHTML = '<div style="padding:2rem;color:red;font-family:monospace;">ERROR: El NÚCLEO no se cargó correctamente.</div>';
           return;
         }
 
-        // ORDEN CORRECTO DE REGISTRO:
-        // 1. CAJA
-        NUCLEO.registerModule('caja', {
-          name: 'CAJA',
-          icon: 'point_of_sale',
-          init: function () { if (typeof CAJA !== 'undefined') CAJA.init(); },
-          onShow: function () { if (typeof CAJA !== 'undefined') CAJA.onShow(); }
-        });
-
-        // 2. INVENTARIO
-        NUCLEO.registerModule('inventario', {
-          name: 'INVENTARIO',
-          icon: 'inventory_2',
-          init: function () { if (typeof INVENTARIO !== 'undefined') INVENTARIO.init(); },
-          onShow: function () { if (typeof INVENTARIO !== 'undefined') INVENTARIO.onShow(); }
-        });
-
-        // 3. COMPRAS
-        NUCLEO.registerModule('compras', {
-          name: 'COMPRAS',
-          icon: 'shopping_cart',
-          init: function () { if (typeof ComprasModule !== 'undefined') ComprasModule.init(); },
-          onShow: function () { if (typeof ComprasModule !== 'undefined') ComprasModule.onShow(); }
-        });
-
-        // 4. FINANZAS
-        NUCLEO.registerModule('finanzas', {
-          name: 'FINANZAS',
-          icon: 'account_balance_wallet',
-          init: function () { if (typeof FINANZAS !== 'undefined') FINANZAS.init(); },
-          onShow: function () { if (typeof FINANZAS !== 'undefined') FINANZAS.onShow(); }
-        });
-
-        // 5. REPORTES
-        NUCLEO.registerModule('reportes', {
-          name: 'REPORTES',
-          icon: 'analytics',
-          init: function () { if (typeof REPORTES !== 'undefined') REPORTES.init(); },
-          onShow: function () { if (typeof REPORTES !== 'undefined') REPORTES.onShow(); }
-        });
-
-        // 6. CONFIG
-        NUCLEO.registerModule('config', {
-          name: 'CONFIG',
-          icon: 'settings',
-          init: function () { if (typeof CONFIG !== 'undefined') CONFIG.init(); },
-          onShow: function () { if (typeof CONFIG !== 'undefined') CONFIG.onShow(); }
-        });
-
-        // 7. AUTOMATIZACIÓN (noTab)
-        setTimeout(function() {
-          if (typeof AUTOMATIZACION !== 'undefined') {
-            AUTOMATIZACION.init();
-          }
-        }, 200);
+        // Orden de las solapas
+        registrar('caja',       { name: 'CAJA',       icon: 'point_of_sale' },           function () { return window.CAJA; });
+        registrar('inventario', { name: 'INVENTARIO', icon: 'inventory_2' },             function () { return window.INVENTARIO; });
+        registrar('compras',    { name: 'COMPRAS',    icon: 'shopping_cart',    soloAdmin: true }, function () { return typeof ComprasModule !== 'undefined' ? ComprasModule : null; });
+        registrar('finanzas',   { name: 'FINANZAS',   icon: 'account_balance_wallet', soloAdmin: true }, function () { return window.FINANZAS; });
+        registrar('reportes',   { name: 'REPORTES',   icon: 'analytics',        soloAdmin: true }, function () { return window.REPORTES; });
+        registrar('config',     { name: 'CONFIG',     icon: 'settings',         soloAdmin: true }, function () { return window.CONFIG; });
+        // AUTOMATIZACIÓN se registra sola (noTab) desde su propio archivo.
 
         // Mostrar CAJA por defecto
-        setTimeout(function () {
-          NUCLEO.showTab('caja');
-        }, 100);
-
+        NUCLEO.showTab('caja');
       });
     })();
   </script>

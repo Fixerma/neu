@@ -1,379 +1,255 @@
 /* ============================================
    NEURORA POS - AUTOMATIZACIÓN (ANEXO H)
    Motor transversal de alertas
+   Versión: corrección de la maqueta (liquidez, deduplicación, boot)
    ============================================ */
 
 (function () {
   'use strict';
 
   const AUTOMATIZACION = {
-    id: 'automatizacion',
-    name: 'AUTOMATIZACIÓN',
-    noTab: true,
-    lastLiquidityCheck: null,
-
-    init: function () {
-      console.log('[AUTOMATIZACIÓN] Inicializando...');
-      this.renderBell();
-      this.bindEvents();
-      this.checkPeriodicAlerts();
+    // ==========================================
+    // 0. ARRANQUE (hooks del NÚCLEO)
+    // ==========================================
+    // boot: una sola vez al registrar el módulo. No depende de la UI ni de timers.
+    boot: function () {
+      const self = this;
+      NUCLEO.on('pos:listo', function () { self.renderBell(); self.checkLiquidez(); });
+      NUCLEO.on('pos:facturaRecibida', function (p) { self.checkMargenErosionado(p); });
+      NUCLEO.on('pos:cierreRealizado', function () { self.checkCajaChica(); });
+      NUCLEO.on('pos:tabShown', function (d) {
+        if (d.id === 'finanzas') self.checkLiquidez();
+        else if (d.id === 'compras') self.checkCompraInteligente();
+        self.updateBadge();
+      });
+      ['pos:alertaRegistrada', 'pos:alertaLeida', 'pos:sesionCambiada'].forEach(function (ev) {
+        NUCLEO.on(ev, function () { self.updateBadge(); });
+      });
+      NUCLEO.onEscapeGlobal(function () { return self.cerrarDropdown(); });
     },
 
-    onShow: function () {
-      this.updateBadge();
-      this.checkPeriodicAlerts();
-    },
+    init: function () {},
 
     // ==========================================
-    // 1. RENDERIZADO DE CAMPANA Y DROPDOWN
+    // 1. CAMPANA Y DROPDOWN
     // ==========================================
     renderBell: function () {
-      // Esperar un poco para asegurar que el slot exista
-      setTimeout(() => {
-        const slot = document.getElementById('slot-campana');
-        if (!slot) {
-          console.warn('[AUTOMATIZACIÓN] Slot de campana no encontrado');
-          return;
-        }
-
-        slot.innerHTML = `
-          <div class="alert-bell-container" id="alertBellBtn">
-            <span class="material-symbols-outlined">notifications</span>
-            <span class="alert-badge" id="alertBadge" style="display: none;">0</span>
-            <div class="alert-dropdown" id="alertDropdown" style="display: none;">
-              <div class="alert-dropdown-header">
-                <h3>Alertas</h3>
-                <button class="btn btn-ghost" id="markAllRead" style="font-size: 11px;">Marcar todas</button>
-              </div>
-              <div class="alert-dropdown-body" id="alertDropdownBody">
-                <div class="alert-empty">No hay alertas activas</div>
-              </div>
-            </div>
+      const slot = document.getElementById('slot-campana');
+      if (!slot || slot.querySelector('#alertBellBtn')) return;
+      const self = this;
+      slot.innerHTML = `
+        <div class="alert-bell-container" id="alertBellBtn">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="alert-badge" id="alertBadge" style="display: none;">0</span>
+        </div>
+        <div class="alert-dropdown" id="alertDropdown" style="display: none;">
+          <div class="alert-dropdown-header">
+            <h3>Alertas</h3>
+            <button class="btn btn-ghost" id="markAllRead" style="font-size: 11px;">Marcar todas</button>
           </div>
-        `;
+          <div class="alert-dropdown-body" id="alertDropdownBody"><div class="alert-empty">No hay alertas activas</div></div>
+        </div>`;
+      document.getElementById('alertBellBtn').addEventListener('click', function (e) { e.stopPropagation(); self.toggleDropdown(); });
+      // Clicks dentro del dropdown NO lo cierran
+      document.getElementById('alertDropdown').addEventListener('click', function (e) { e.stopPropagation(); });
+      document.getElementById('markAllRead').addEventListener('click', function () { self.markAllAsRead(); });
+      document.addEventListener('click', function () { self.cerrarDropdown(); });
+      this.updateBadge();
+    },
 
-        document.getElementById('alertBellBtn').addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.toggleDropdown();
-        });
-
-        document.getElementById('markAllRead').addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.markAllAsRead();
-        });
-
-        document.addEventListener('click', () => {
-          const dropdown = document.getElementById('alertDropdown');
-          if (dropdown) dropdown.style.display = 'none';
-        });
-
-        this.updateBadge();
-        console.log('[AUTOMATIZACIÓN] Campana renderizada correctamente');
-      }, 300);
+    cerrarDropdown: function () {
+      const dd = document.getElementById('alertDropdown');
+      if (dd && dd.style.display !== 'none') { dd.style.display = 'none'; return true; }
+      return false;
     },
 
     toggleDropdown: function () {
-      const dropdown = document.getElementById('alertDropdown');
-      if (!dropdown) return;
-      dropdown.style.display = dropdown.style.display === 'none' ? 'flex' : 'none';
-      if (dropdown.style.display === 'flex') {
-        this.renderAlerts();
-      }
+      const dd = document.getElementById('alertDropdown');
+      if (!dd) return;
+      const abrir = dd.style.display === 'none';
+      dd.style.display = abrir ? 'flex' : 'none';
+      if (abrir) this.renderAlerts();
     },
 
+    noLeidas: function () { return (NUCLEO.getData('pos_alerts_log') || []).filter(function (a) { return !a.leida; }); },
+
     updateBadge: function () {
-      const alerts = NUCLEO.getData('pos_alerts_log') || [];
-      const unreadAlta = alerts.filter(a => !a.leida && a.severidad === 'ALTA').length;
+      const n = this.noLeidas().filter(function (a) { return a.severidad === 'ALTA'; }).length;
       const badge = document.getElementById('alertBadge');
-      if (badge) {
-        if (unreadAlta > 0) {
-          badge.textContent = unreadAlta;
-          badge.style.display = 'flex';
-        } else {
-          badge.style.display = 'none';
-        }
-      }
+      if (!badge) return;
+      badge.textContent = n;
+      badge.style.display = n > 0 ? 'flex' : 'none';
     },
 
     renderAlerts: function () {
-      const alerts = NUCLEO.getData('pos_alerts_log') || [];
-      const unread = alerts.filter(a => !a.leida).sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+      const self = this;
       const body = document.getElementById('alertDropdownBody');
       if (!body) return;
-
-      if (unread.length === 0) {
-        body.innerHTML = '<div class="alert-empty">No hay alertas activas</div>';
-        return;
-      }
-
-      body.innerHTML = unread.map(alert => `
-        <div class="alert-card severity-${alert.severidad.toLowerCase()}">
+      const unread = this.noLeidas().sort(function (a, b) { return new Date(b.fecha) - new Date(a.fecha); });
+      if (unread.length === 0) { body.innerHTML = '<div class="alert-empty">No hay alertas activas</div>'; return; }
+      body.innerHTML = unread.map(function (a) {
+        return `
+        <div class="alert-card severity-${NUCLEO.esc(String(a.severidad).toLowerCase())}">
           <div class="alert-card-header">
-            <span class="material-symbols-outlined alert-card-icon">${this.getIconForType(alert.tipo)}</span>
-            <span class="alert-card-title">${NUCLEO.esc(alert.titulo)}</span>
-            <span class="alert-card-severity">${alert.severidad}</span>
+            <span class="material-symbols-outlined alert-card-icon">${self.getIconForType(a.tipo)}</span>
+            <span class="alert-card-title">${NUCLEO.esc(a.titulo || a.tipo)}</span>
+            <span class="alert-card-severity">${NUCLEO.esc(a.severidad)}</span>
           </div>
-          <div class="alert-card-body">${NUCLEO.esc(alert.mensaje)}</div>
+          <div class="alert-card-body">${NUCLEO.esc(a.mensaje)}</div>
           <div class="alert-card-actions">
-            <button class="btn btn-secondary" onclick="AUTOMATIZACION.markAsRead('${alert.id}')">Marcar como leída</button>
-            ${alert.moduloDestino ? `<button class="btn btn-primary" onclick="AUTOMATIZACION.goToModule('${alert.moduloDestino}', '${alert.id || ''}')">IR A ${alert.moduloDestino}</button>` : ''}
+            <button class="btn btn-secondary" onclick="AUTOMATIZACION.markAsRead(${NUCLEO.jsArg(a.id)})">Marcar como leída</button>
+            ${a.moduloDestino ? `<button class="btn btn-primary" onclick="AUTOMATIZACION.goToModule(${NUCLEO.jsArg(a.moduloDestino)}, ${NUCLEO.jsArg(a.id)})">IR A ${NUCLEO.esc(a.moduloDestino)}</button>` : ''}
           </div>
-        </div>
-      `).join('');
+        </div>`;
+      }).join('');
     },
 
     getIconForType: function (tipo) {
-      const icons = {
-        'margen_erosionado': 'trending_down',
-        'liquidez': 'payments',
-        'compra_inteligente': 'shopping_cart',
-        'caja_chica': 'account_balance_wallet'
-      };
-      return icons[tipo] || 'notifications';
+      return { margen_erosionado: 'trending_down', liquidez: 'payments', compra_inteligente: 'shopping_cart', caja_chica: 'account_balance_wallet' }[tipo] || 'notifications';
     },
 
-    // ==========================================
-    // 2. ACCIONES DE ALERTAS
-    // ==========================================
     markAsRead: function (alertId) {
-      const userId = (NUCLEO.getUsuarioActivo() || {}).id || null;
-      NUCLEO.marcarAlertaLeida(alertId, userId);
+      NUCLEO.marcarAlertaLeida(alertId, (NUCLEO.getUsuarioActivo() || {}).id || null);
       this.updateBadge();
       this.renderAlerts();
     },
 
     markAllAsRead: function () {
-      const alerts = NUCLEO.getData('pos_alerts_log') || [];
-      const userId = (NUCLEO.getUsuarioActivo() || {}).id || null;
-      alerts.forEach(a => {
-        if (!a.leida) {
-          NUCLEO.marcarAlertaLeida(a.id, userId);
-        }
-      });
-      this.updateBadge();
-      this.renderAlerts();
+      const self = this;
+      const uid = (NUCLEO.getUsuarioActivo() || {}).id || null;
+      this.noLeidas().forEach(function (a) { NUCLEO.marcarAlertaLeida(a.id, uid); });
+      self.updateBadge();
+      self.renderAlerts();
     },
 
     goToModule: function (modulo, alertId) {
-      NUCLEO.showTab(modulo.toLowerCase());
-      if (alertId) {
-        this.markAsRead(alertId);
-      }
-      const dropdown = document.getElementById('alertDropdown');
-      if (dropdown) dropdown.style.display = 'none';
+      this.cerrarDropdown();
+      NUCLEO.showTab(String(modulo).toLowerCase());
+      if (alertId) this.markAsRead(alertId);
     },
 
     // ==========================================
-    // 3. LÓGICA DE ALERTAS
+    // 2. DEDUPLICACIÓN (siempre por fecha LOCAL guardada en la alerta)
     // ==========================================
-    bindEvents: function () {
-      NUCLEO.on('pos:facturaRecibida', (payload) => {
-        this.checkMargenErosionado(payload);
-      });
-
-      NUCLEO.on('pos:cierreRealizado', () => {
-        this.checkCajaChica();
-      });
-
-      // "Al entrar a FINANZAS" (liquidez) y "al entrar a COMPRAS" (compra
-      // inteligente) — ANEXO H §4.2/§4.3. showTab() del NÚCLEO emite
-      // pos:tabShown cada vez que se muestra una pestaña; antes de esto,
-      // ambos triggers dependían de leer el DOM 200ms después de cargar la
-      // página (antes de que el usuario clickeara nada), así que en la
-      // práctica nunca se disparaban al navegar entre pestañas.
-      NUCLEO.on('pos:tabShown', (data) => {
-        if (data.id === 'finanzas') {
-          this.checkLiquidez();
-        } else if (data.id === 'compras') {
-          this.checkCompraInteligente();
-        }
-      });
+    existe: function (tipo, filtro) {
+      return (NUCLEO.getData('pos_alerts_log') || []).some(function (a) { return a.tipo === tipo && filtro(a); });
     },
 
-    checkPeriodicAlerts: function () {
-      const today = NUCLEO.today();
-      if (this.lastLiquidityCheck !== today) {
-        this.checkLiquidez();
-        this.lastLiquidityCheck = today;
-      }
-    },
-
+    // ==========================================
+    // 3. LAS 4 ALERTAS
+    // ==========================================
+    // 4.1 Margen erosionado: SOLO lee el array que calculó COMPRAS. Una alerta por producto y día.
     checkMargenErosionado: function (payload) {
-      if (!payload.itemsConMargenErosionado || payload.itemsConMargenErosionado.length === 0) return;
-      
-      const alerts = NUCLEO.getData('pos_alerts_log') || [];
-      
-      payload.itemsConMargenErosionado.forEach(item => {
-        const exists = alerts.some(a => 
-          a.tipo === 'margen_erosionado' && 
-          !a.leida && 
-          a.fecha.startsWith(NUCLEO.today()) &&
-          a.detalle && a.detalle.includes(item.code)
-        );
-        
-        if (!exists) {
-          NUCLEO.registrarAlerta({
-            tipo: 'margen_erosionado',
-            severidad: 'ALTA',
-            titulo: 'Margen Erosionado',
-            mensaje: `El costo de ${item.name} subió a ${NUCLEO.money(item.costoNuevo)}. Tu precio actual deja una ganancia del ${item.margenActual.toFixed(1)}%. Actualizar precio en INVENTARIO.`,
-            moduloDestino: 'INVENTARIO',
-            fecha: NUCLEO.nowISO(),
-            leida: false,
-            detalle: item.code
-          });
-        }
+      const self = this;
+      const items = (payload && payload.itemsConMargenErosionado) || [];
+      items.forEach(function (item) {
+        if (self.existe('margen_erosionado', function (a) { return a.detalle === item.code && a.fechaLocal === NUCLEO.today(); })) return;
+        NUCLEO.registrarAlerta({
+          tipo: 'margen_erosionado', severidad: 'ALTA', titulo: 'Margen Erosionado',
+          mensaje: 'El costo de ' + item.name + ' subió a ' + NUCLEO.money(item.costoNuevo) + '. Tu precio actual deja un margen del ' + Number(item.margenActual).toFixed(1) + '% (mínimo ' + item.margenMinimoRequerido + '%). Actualizá el precio en INVENTARIO.',
+          moduloDestino: 'INVENTARIO', detalle: item.code
+        });
       });
-      
       this.updateBadge();
+    },
+
+    // 4.2 Liquidez. Regla: lo que vence en ≤3 días (incluye lo ya vencido) vs. el efectivo que hay para pagarlo.
+    // Caja abierta → efectivo del cajón. Caja cerrada → efectivo contado en el último cierre.
+    evaluarLiquidez: function () {
+      const hoy = NUCLEO.parseLocalDate(NUCLEO.today());
+      const limite = NUCLEO.parseLocalDate(NUCLEO.addDays(NUCLEO.today(), 3));
+      const vencimientos = (NUCLEO.getData('pos_finanzas_reservas') || []).filter(function (r) {
+        return r.estado === 'activa' && NUCLEO.parseLocalDate(r.fechaVencimiento) <= limite;
+      });
+      const total = NUCLEO.roundCents(vencimientos.reduce(function (s, r) { return s + (r.monto || 0); }, 0));
+      let efectivo, referencia;
+      if (NUCLEO.getCicloAbierto()) { efectivo = NUCLEO.getEfectivoTotalCaja(); referencia = 'caja'; }
+      else {
+        const cierres = NUCLEO.getData('pos_cierres') || [];
+        efectivo = cierres.length ? (cierres[cierres.length - 1].montoContado || 0) : 0;
+        referencia = 'ultimo_cierre';
+      }
+      return { alerta: vencimientos.length > 0 && total > efectivo, total: total, efectivo: efectivo, faltante: NUCLEO.roundCents(total - efectivo), referencia: referencia, cantidad: vencimientos.length, hoy: hoy };
     },
 
     checkLiquidez: function () {
-      const reservas = NUCLEO.getData('pos_finanzas_reservas') || [];
-      const hoy = new Date();
-      const tresDias = new Date(hoy.getTime() + 3 * 24 * 60 * 60 * 1000);
-      
-      const vencimientos = reservas.filter(r => {
-        if (r.estado !== 'activa') return false;
-        const venc = new Date(r.fechaVencimiento);
-        return venc >= hoy && venc <= tresDias;
-      });
-      
-      if (vencimientos.length === 0) return;
-      
-      const totalVencimientos = vencimientos.reduce((sum, r) => sum + (r.monto || 0), 0);
-      
-      // Calcular efectivo disponible (simplificado)
-      const ciclo = NUCLEO.getCicloAbierto();
-      let efectivoDisponible = 0;
-      if (ciclo) {
-        const ventasEfectivo = NUCLEO.getVentasPorMetodo(ciclo.id)['cash'] || 0;
-        const subcaja = NUCLEO.getVentasSubCajaDelCiclo(ciclo.id);
-        efectivoDisponible = (ciclo.montoApertura || 0) + ventasEfectivo - subcaja;
+      const r = this.evaluarLiquidez();
+      // Máximo 1 por día (leída o no): sobrevive a F5 porque se verifica contra el log, no contra memoria
+      if (r.alerta && !this.existe('liquidez', function (a) { return a.fechaLocal === NUCLEO.today(); })) {
+        NUCLEO.registrarAlerta({
+          tipo: 'liquidez', severidad: 'ALTA', titulo: 'Flujo de Caja', userId: 'sistema',
+          mensaje: 'Hay ' + r.cantidad + ' reserva(s) por ' + NUCLEO.money(r.total) + ' que vencen en 3 días o ya vencieron. Efectivo disponible para pagar (' + (r.referencia === 'caja' ? 'caja actual' : 'último cierre') + '): ' + NUCLEO.money(r.efectivo) + '. Te faltan ' + NUCLEO.money(r.faltante) + '.',
+          moduloDestino: 'FINANZAS'
+        });
       }
-      
-      const reservasActivas = reservas.filter(r => r.estado === 'activa').reduce((sum, r) => sum + (r.monto || 0), 0);
-      efectivoDisponible -= reservasActivas;
-      
-      if (totalVencimientos > efectivoDisponible) {
-        const alerts = NUCLEO.getData('pos_alerts_log') || [];
-        const exists = alerts.some(a => 
-          a.tipo === 'liquidez' && 
-          !a.leida && 
-          a.fecha.startsWith(NUCLEO.today())
-        );
-        
-        if (!exists) {
-          const faltante = totalVencimientos - efectivoDisponible;
-          NUCLEO.registrarAlerta({
-            tipo: 'liquidez',
-            severidad: 'ALTA',
-            titulo: 'Flujo de Caja',
-            mensaje: `En ${Math.ceil((tresDias - hoy) / (1000 * 60 * 60 * 24))} días vencen ${NUCLEO.money(totalVencimientos)} en reservas. Tu disponible actual es ${NUCLEO.money(efectivoDisponible)}. Te faltan ${NUCLEO.money(faltante)}.`,
-            moduloDestino: 'FINANZAS',
-            fecha: NUCLEO.nowISO(),
-            leida: false
-          });
-        }
-      }
-      
       this.updateBadge();
+      return r;
+    },
+
+    // 4.3 Compra inteligente: stock ≤ mínimo y sin pedido pendiente que lo incluya. Una por producto cada 7 días.
+    evaluarCompraInteligente: function () {
+      const products = NUCLEO.getData('pos_products') || [];
+      const sales = NUCLEO.getData('pos_sales') || [];
+      const pendientes = {};
+      (NUCLEO.getData('pos_purchase_orders') || []).filter(function (o) { return o.estado === 'Pendiente'; })
+        .forEach(function (o) { (o.items || []).forEach(function (i) { pendientes[i.code] = true; }); });
+      const desde = new Date(); desde.setDate(desde.getDate() - 30);
+      const vendido = {};
+      sales.forEach(function (s) {
+        if (new Date(s.fecha) < desde) return;
+        (s.items || []).forEach(function (it) {
+          const q = (it.esCigarrillo && it.tipo === 'suelto') ? (Number(it.qty) || 0) / 20 : (Number(it.qty) || 0);
+          vendido[it.code] = (vendido[it.code] || 0) + q;
+        });
+      });
+      return products.filter(function (p) {
+        const min = Number(p.minStock) || 0;
+        return p.active !== false && min > 0 && (Number(p.stock) || 0) <= min && !pendientes[p.code];
+      }).map(function (p) {
+        const diario = (vendido[p.code] || 0) / 30;
+        const stock = Number(p.stock) || 0;
+        return { code: p.code, name: p.name, stock: stock, dias: diario > 0 ? Math.floor(stock / diario) : null };
+      });
     },
 
     checkCompraInteligente: function () {
-      const products = NUCLEO.getData('pos_products') || [];
-      const sales = NUCLEO.getData('pos_sales') || [];
-      const alerts = NUCLEO.getData('pos_alerts_log') || [];
-      
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-      
-      const salesByProduct = {};
-      sales.forEach(sale => {
-        if (new Date(sale.fecha) >= thirtyDaysAgo) {
-          sale.items.forEach(item => {
-            if (!salesByProduct[item.code]) salesByProduct[item.code] = 0;
-            salesByProduct[item.code] += item.qty;
-          });
-        }
+      const hace7 = NUCLEO.addDays(NUCLEO.today(), -7);
+      const self = this;
+      this.evaluarCompraInteligente().forEach(function (c) {
+        if (self.existe('compra_inteligente', function (a) { return a.detalle === c.code && a.fechaLocal >= hace7; })) return;
+        NUCLEO.registrarAlerta({
+          tipo: 'compra_inteligente', severidad: 'MEDIA', titulo: 'Stock Bajo', userId: 'sistema',
+          mensaje: c.name + ' está en ' + c.stock + ' unidades (por debajo del mínimo) y no hay pedido pendiente.' + (c.dias !== null ? ' Con el ritmo de ventas alcanza para ~' + c.dias + ' día(s).' : '') + ' Armá un pedido en COMPRAS.',
+          moduloDestino: 'COMPRAS', detalle: c.code
+        });
       });
-      
-      products.forEach(p => {
-        if (p.active === false) return;
-        const vtas30d = salesByProduct[p.code] || 0;
-        const dailyAvg = vtas30d / 30;
-        const daysOfStock = dailyAvg > 0 ? p.stock / dailyAvg : 999;
-        
-        if (p.stock <= (p.minStock || 0) || daysOfStock < 15) {
-          const exists = alerts.some(a => 
-            a.tipo === 'compra_inteligente' && 
-            !a.leida && 
-            a.detalle === p.code
-          );
-          
-          if (!exists) {
-            const needed = Math.ceil((dailyAvg * 30) - p.stock);
-            NUCLEO.registrarAlerta({
-              tipo: 'compra_inteligente',
-              severidad: 'MEDIA',
-              titulo: 'Stock Bajo',
-              mensaje: `Te sugerimos pedir ${needed} unidades de ${p.name}. Se agotará en aproximadamente ${Math.ceil(daysOfStock)} días.`,
-              moduloDestino: 'COMPRAS',
-              fecha: NUCLEO.nowISO(),
-              leida: false,
-              detalle: p.code
-            });
-          }
-        }
-      });
-      
       this.updateBadge();
     },
 
+    // 4.4 Caja chica: los últimos 3 cierres con faltante. Una alerta por cierre.
     checkCajaChica: function () {
-      const cierres = NUCLEO.getData('pos_cierres') || [];
-      const ultimos3 = cierres.slice(-3);
-      
-      if (ultimos3.length < 3) return;
-      
-      const todosNegativos = ultimos3.every(c => c.diferencia < 0);
-      
-      if (todosNegativos) {
-        const alerts = NUCLEO.getData('pos_alerts_log') || [];
-        const exists = alerts.some(a => 
-          a.tipo === 'caja_chica' && 
-          !a.leida && 
-          a.fecha.startsWith(NUCLEO.today())
-        );
-        
-        if (!exists) {
-          NUCLEO.registrarAlerta({
-            tipo: 'caja_chica',
-            severidad: 'BAJA',
-            titulo: 'Control de Caja Chica',
-            mensaje: 'Revisa tu cambio. Los últimos 3 cierres tuvieron diferencia negativa.',
-            moduloDestino: 'CAJA',
-            fecha: NUCLEO.nowISO(),
-            leida: false
-          });
-        }
-      }
-      
+      const ultimos = (NUCLEO.getData('pos_cierres') || []).slice(-3);
+      if (ultimos.length < 3 || !ultimos.every(function (c) { return (c.diferencia || 0) < 0; })) return;
+      const idUltimo = ultimos[2].id;
+      if (this.existe('caja_chica', function (a) { return a.detalle === idUltimo; })) return;
+      NUCLEO.registrarAlerta({
+        tipo: 'caja_chica', severidad: 'BAJA', titulo: 'Control de Caja Chica',
+        mensaje: 'Revisá el cambio y las salidas de efectivo: los últimos 3 cierres tuvieron faltante.',
+        moduloDestino: 'CAJA', detalle: idUltimo
+      });
       this.updateBadge();
     }
   };
 
-  // Exportar globalmente
   window.AUTOMATIZACION = AUTOMATIZACION;
-  
-  // Auto-registrar en NUCLEO si existe
+
+  // Se registra sola (noTab). boot() corre al registrarse, antes de que exista la UI.
   if (typeof NUCLEO !== 'undefined') {
     NUCLEO.registerModule('automatizacion', {
       name: 'AUTOMATIZACIÓN',
       noTab: true,
-      init: function () {
-        AUTOMATIZACION.init();
-      }
+      boot: function () { AUTOMATIZACION.boot(); },
+      init: function () {}
     });
   }
 })();

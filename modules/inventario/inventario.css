@@ -9,18 +9,7 @@ Namespace: .inv-*
 .inv-header { padding: var(--space-md); background: var(--color-surface-container-lowest); border-bottom: 1px solid var(--color-outline-variant); }
 .inv-header-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md); }
 
-/* <-- NUEVO: Buscador */
-.inv-search {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  height: 2.5rem;
-  padding: 0 var(--space-md);
-  margin-bottom: var(--space-md);
-  background: var(--color-surface-container-low);
-  border: 1px solid var(--color-outline-variant);
-  border-radius: var(--radius-lg);
-}
+.inv-search { display: flex; align-items: center; gap: var(--space-sm); height: 2.5rem; padding: 0 var(--space-md); margin-bottom: var(--space-md); background: var(--color-surface-container-low); border: 1px solid var(--color-outline-variant); border-radius: var(--radius-lg); }
 .inv-search:focus-within { border-color: var(--color-primary); }
 .inv-search .material-symbols-outlined { font-size: 20px; color: var(--color-outline); }
 .inv-search-input { flex: 1; border: none; background: transparent; outline: none; font-size: 14px; color: var(--color-on-surface); }
@@ -31,15 +20,16 @@ Namespace: .inv-*
 .inv-chip:hover { background: var(--color-surface-container-high); }
 .inv-chip.active { background: var(--color-primary-container); color: var(--color-on-primary); border-color: var(--color-primary); }
 
-.inv-table-container { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+/* La tabla scrollea dentro de su contenedor (encabezado fijo). Funciona con cualquier cantidad de productos. */
+.inv-table-container { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; }
+.inv-table-container::-webkit-scrollbar { width: 6px; display: block; }
+.inv-table-container::-webkit-scrollbar-thumb { background: var(--color-outline-variant); border-radius: var(--radius-full); }
 .inv-table { width: 100%; border-collapse: collapse; }
-.inv-table thead { position: sticky; top: 0; z-index: 10; background: var(--color-surface-container-high); }
-.inv-table th { padding: var(--space-md); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-on-surface-variant); text-align: left; border-bottom: 1px solid var(--color-outline-variant); }
-.inv-table tbody { overflow-y: auto; display: block; }
-.inv-table tr { display: table; width: 100%; table-layout: fixed; border-bottom: 1px solid var(--color-outline-variant); cursor: pointer; transition: background 0.2s; }
-.inv-table tr:hover { background: var(--color-surface-container-low); }
-.inv-table tr.inv-row-selected { background: var(--color-surface-container-high); }
-.inv-table tr.inv-row-selected td { color: var(--color-primary); font-weight: 600; }
+.inv-table th { position: sticky; top: 0; z-index: 10; background: var(--color-surface-container-high); padding: var(--space-md); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-on-surface-variant); text-align: left; border-bottom: 1px solid var(--color-outline-variant); }
+.inv-table tbody tr { border-bottom: 1px solid var(--color-outline-variant); cursor: pointer; transition: background 0.2s; }
+.inv-table tbody tr:hover { background: var(--color-surface-container-low); }
+.inv-table tbody tr.inv-row-selected { background: var(--color-surface-container-high); }
+.inv-table tbody tr.inv-row-selected td { color: var(--color-primary); font-weight: 600; }
 .inv-table td { padding: var(--space-md); font-size: 14px; color: var(--color-on-surface); }
 
 .inv-badge { display: inline-flex; align-items: center; padding: 0.25rem 0.5rem; border-radius: var(--radius-md); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -62,6 +52,7 @@ Namespace: .inv-*
 .inv-stock-controls { display: flex; gap: var(--space-sm); margin-top: var(--space-sm); }
 .inv-stock-btn { padding: var(--space-sm) var(--space-md); border: 1px solid var(--color-outline-variant); border-radius: var(--radius-lg); background: var(--color-surface-container-low); color: var(--color-on-surface); font-weight: 600; cursor: pointer; transition: all 0.2s; }
 .inv-stock-btn:hover { background: var(--color-surface-container-high); border-color: var(--color-primary); color: var(--color-primary); }
+.inv-ajuste-row { display: grid; grid-template-columns: 5.5rem 1fr auto; gap: var(--space-sm); margin-top: var(--space-sm); align-items: center; }
 
 .inv-ganancia-neta { display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-md); background: var(--color-surface-container-low); border-radius: var(--radius-lg); margin-top: var(--space-sm); }
 .inv-ganancia-neta.positive { background: var(--color-tertiary-container); color: var(--color-on-tertiary); }
@@ -72,6 +63,7 @@ Namespace: .inv-*
 .inv-movimientos-table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .inv-movimientos-table th { padding: var(--space-sm); text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--color-on-surface-variant); border-bottom: 1px solid var(--color-outline-variant); }
 .inv-movimientos-table td { padding: var(--space-sm); border-bottom: 1px solid var(--color-outline-variant); }
+.inv-nota { font-size: 11px; color: var(--color-on-surface-variant); }
 
 .inv-actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--color-outline-variant); }
 .inv-actions .btn { flex: 1 1 calc(50% - var(--space-sm)); min-width: 0; }
@@ -80,4 +72,5 @@ Namespace: .inv-*
 .inv-table-actions { display: flex; gap: var(--space-sm); }
 
 .inv-modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 100; }
-.inv-modal-content { background: var(--color-surface-container-lowest); border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); max-width: 700px; width: 90%; padding: var(--space-lg); }
+.inv-modal-content { background: var(--color-surface-container-lowest); border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); max-width: 760px; width: 90%; padding: var(--space-lg); }
+.inv-csv-errores { background: var(--color-error-container); color: var(--color-error); border-radius: var(--radius-lg); padding: var(--space-sm) var(--space-md); margin-bottom: var(--space-md); font-size: 12px; max-height: 120px; overflow-y: auto; }
